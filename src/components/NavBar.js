@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { FaBars } from "react-icons/fa";
-import { Link as LinkR } from "react-router-dom";
 
 const Nav = styled.nav`
 background: #CFCFCF;
@@ -32,13 +31,29 @@ const NavContainer = styled.div`
 
 const NavLogo = styled.div`
   color: white;
-  justify-self: center;
-  cursor: arrow;
-  font-size: 1.5rem;
+  font-size: 2.5rem;
   display: flex;
+  justify-content: center;
   align-items: center;
   font-weight: bold;
   text-decoration: none;
+  position: absolute;
+  width: 186px;
+  height: 36px;
+  left: 706px;
+  top: 13px;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+`;
+const ImgIcon = styled.div`
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  width: 81px;
+  height: 91px;
+  left: 645px;
+  top: 0px;
+
 `;
 
 const MobileIcon = styled.div`
@@ -52,14 +67,15 @@ const MobileIcon = styled.div`
   color: white;
 `;
 
-
 const Navbar = ({ toggle }) => {
   return (
     <>
       <Nav>
         <NavContainer>
           <NavLogo>NBRLY</NavLogo>
-          <NavLogo img src="../images/Mess3.png" alt="navbar-logo" />
+          <ImgIcon>
+            <img src="../images/Mess3.png" alt="navbar-logo" />
+          </ImgIcon>
           <MobileIcon onClick={toggle}>
             <FaBars />
           </MobileIcon>
