@@ -1,8 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import NavBar from "../NavBar";
-import SideBar from "../SideBar";
-import DropDown from "../DropDown";
+import ActivitySelect from "../ActivitySelect";
 
 const TitleHomeWrap= styled.div`
 
@@ -17,22 +15,13 @@ align-items: center;
   transition: 0.8s all ease;
 }
 `;
-
-export const Home = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggle = () => {
-    setIsOpen(!isOpen);
-  };
-
+const Home = () => {
   return (
     <>
-      <SideBar isOpen={isOpen} toggle={toggle} />
-      <NavBar toggle={toggle} />
       <TitleHomeWrap>
       <h2>What do you want to do today?</h2>
       </TitleHomeWrap>
-      <DropDown />
+      <ActivitySelect />
     </>
   );
 };

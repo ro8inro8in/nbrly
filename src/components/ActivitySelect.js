@@ -18,7 +18,7 @@ font-size: 1rem;
 }
 `;
 
-const DropDown = () => {
+const ActivitySelect = () => {
   return (
     <>
     <DropMenuWrap>
@@ -34,4 +34,4 @@ const DropDown = () => {
   );
 };
 
-export default DropDown;
+export default ActivitySelect;

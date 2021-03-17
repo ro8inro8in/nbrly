@@ -54,6 +54,10 @@ const ImgIcon = styled.div`
   left: 645px;
   top: 0px;
 
+  @media screen and (max-width: 960px) {
+  transition: 0.8s all ease;
+}
+
 `;
 
 const MobileIcon = styled.div`
@@ -65,6 +69,10 @@ const MobileIcon = styled.div`
   font-size: 1.8rem;
   cursor: pointer;
   color: white;
+
+  @media screen and (max-width: 960px) {
+    transition: 0.8s all ease;
+  }
 `;
 
 const Navbar = ({ toggle }) => {
