@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { FaBars } from "react-icons/fa";
 
@@ -37,9 +38,7 @@ const NavLogo = styled.div`
   align-items: center;
   font-weight: bold;
   text-decoration: none;
-  position: absolute;
   width: 186px;
-  height: 36px;
   left: 706px;
   top: 13px;
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
@@ -51,27 +50,58 @@ const ImgIcon = styled.div`
   position: absolute;
   width: 81px;
   height: 91px;
-  left: 645px;
+  left: 500px;
   top: 0px;
-
   @media screen and (max-width: 960px) {
-  transition: 0.8s all ease;
-}
-
+    left: 300px;
+  }
+  @media screen and (max-width: 460px) {
+    left: 160px;
+  }
 `;
 
 const MobileIcon = styled.div`
-  display: block;
-  position: absolute;
-  top: 0;
-  right: 0;
-  transform: translate(-100%, 40%);
-  font-size: 1.8rem;
-  cursor: pointer;
-  color: white;
+  display: none;
 
-  @media screen and (max-width: 960px) {
-    transition: 0.8s all ease;
+  @media screen and (max-width: 760px) {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(-100%, 40%);
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: white;
+  }
+`;
+
+const NavMenu = styled.ul`
+  display: flex;
+  align-items: center;
+  list-style: none;
+  text-align: center;
+  margin-right: 72px;
+  padding-top: 10px;
+  @media screen and (max-width: 760px){
+    display: none;
+  }
+`;
+
+const NavItem = styled.li`
+  height: 80px;
+`;
+
+const NavLinks = styled(Link)`
+  color: white;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  padding: 1rem;
+  height: 100%;
+  cursor: pointer;
+
+  &.active{
+    border-bottom: 3px solid red;
   }
 `;
 
@@ -87,6 +117,17 @@ const Navbar = ({ toggle }) => {
           <MobileIcon onClick={toggle}>
             <FaBars />
           </MobileIcon>
+          <NavMenu>
+            <NavItem>
+              <NavLinks to="/Profile">Profile</NavLinks>
+            </NavItem>
+            <NavItem>
+              <NavLinks to="/Users">Users</NavLinks>
+            </NavItem>
+            <NavItem>
+              <NavLinks to="/Home">Home</NavLinks>
+            </NavItem>
+          </NavMenu>
         </NavContainer>
       </Nav>
     </>

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import NavBar from "../NavBar";
 import SideBar from "../SideBar";
-
 import Home from "./Home";
 import Profile from "./Profile";
 

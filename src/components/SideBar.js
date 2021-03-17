@@ -6,16 +6,17 @@ import { Link as LinkR } from "react-router-dom";
 const SidebarContainer = styled.aside`
   position: fixed;
   z-index: 999;
-  width: 10%;
-  height: 40%;
-  background: #CFCFCF;
+  width: 100%;
+  height: 100%;
+  background: #cfcfcf;
   display: grid;
   align-items: center;
   top: 0;
   right: 0;
   transition: 0.3s ease-in-out;
-  opacity: ${({ isOpen }) => (isOpen ? '100%' : '0')};
-  top: ${({ isOpen }) => (isOpen ? '0' : '-100%')};
+  opacity: ${({ isOpen }) => (isOpen ? "100%" : "0")};
+  top: ${({ isOpen }) => (isOpen ? "0" : "-100%")};
+
 `;
 const CloseIcon = styled(FaTimes)`
   color: white;
@@ -40,10 +41,9 @@ const SidebarMenu = styled.ul`
   grid-template-rows: repeat(6, 10px);
   text-align: center;
 
-  @media screen and (max-width 480px){
-  grid-template-rows: repeat(6, 60px);
-}
-
+  @media screen and (max-width 480px) {
+    grid-template-rows: repeat(6, 60px);
+  }
 `;
 
 const SidebarLink = styled(LinkR)`
@@ -64,7 +64,7 @@ const SidebarLink = styled(LinkR)`
         transition: 0.2s ease-in-out;
     }
 `;
-const SideBar = ({isOpen, toggle}) => {
+const SideBar = ({ isOpen, toggle }) => {
   return (
     <>
       <SidebarContainer isOpen={isOpen} onClick={toggle}>

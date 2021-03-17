@@ -11,7 +11,6 @@ function App() {
       <Main />
       <Login />
       <Signup />
-  
       <Footer />
     </Router>
   );
