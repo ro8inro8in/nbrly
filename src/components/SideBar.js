@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { FaTimes } from "react-icons/fa";
-import { Link as LinkR } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const SidebarContainer = styled.aside`
   position: fixed;
@@ -46,7 +46,7 @@ const SidebarMenu = styled.ul`
   }
 `;
 
-const SidebarLink = styled(LinkR)`
+const SidebarLink = styled(Link)`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -72,15 +72,13 @@ const SideBar = ({ isOpen, toggle }) => {
           <CloseIcon />
         </Icon>
         <SidebarWrapper>
+        <SidebarMenu>
+            <SidebarLink to="/Home">Home</SidebarLink>
+          </SidebarMenu>
           <SidebarMenu>
             <SidebarLink to="/Profile">Profile</SidebarLink>
           </SidebarMenu>
-          <SidebarMenu>
-            <SidebarLink to="/Users">Users</SidebarLink>
-          </SidebarMenu>
-          <SidebarMenu>
-            <SidebarLink to="/Home">Home</SidebarLink>
-          </SidebarMenu>
+    
         </SidebarWrapper>
       </SidebarContainer>
     </>

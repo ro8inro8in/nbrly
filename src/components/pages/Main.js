@@ -3,7 +3,7 @@ import NavBar from "../NavBar";
 import SideBar from "../SideBar";
 import Home from "./Home";
 import Profile from "./Profile";
-
+import { Route, Switch } from "react-router-dom";
 
 const Main = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,10 +16,15 @@ const Main = () => {
     <>
       <SideBar isOpen={isOpen} toggle={toggle} />
       <NavBar toggle={toggle} />
-      <Home />
-      <Profile />
-    
-     
+
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route exact path="/Profile">
+          <Profile />
+        </Route>
+      </Switch>
     </>
   );
 };

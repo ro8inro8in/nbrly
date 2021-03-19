@@ -82,7 +82,7 @@ const NavMenu = styled.ul`
   text-align: center;
   margin-right: 72px;
   padding-top: 10px;
-  @media screen and (max-width: 760px){
+  @media screen and (max-width: 760px) {
     display: none;
   }
 `;
@@ -100,7 +100,7 @@ const NavLinks = styled(Link)`
   height: 100%;
   cursor: pointer;
 
-  &.active{
+  &.active {
     border-bottom: 3px solid red;
   }
 `;
@@ -119,13 +119,13 @@ const Navbar = ({ toggle }) => {
           </MobileIcon>
           <NavMenu>
             <NavItem>
-              <NavLinks to="/Profile">Profile</NavLinks>
-            </NavItem>
-            <NavItem>
-              <NavLinks to="/Users">Users</NavLinks>
-            </NavItem>
-            <NavItem>
               <NavLinks to="/Home">Home</NavLinks>
+            </NavItem>
+            <NavItem>
+              <NavLinks to="/Profile">My Profile</NavLinks>
+            </NavItem>
+            <NavItem>
+              <NavLinks to="/">Logout</NavLinks>
             </NavItem>
           </NavMenu>
         </NavContainer>

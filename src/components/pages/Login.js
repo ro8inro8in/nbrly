@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Form, FormGroup, Label, Input } from "reactstrap";
+import { Link } from "react-router-dom";
 
 const LoginForm = styled.div`
   width: 100%;
@@ -51,7 +52,7 @@ const Button = styled.div`
   box-shadow: 0 8px 16px rgb(38 38 48 / 20%);  
   width: 100%;
   max-width: 330px;
-  padding: 15px;
+  padding: 15px;s
   margin: auto;
   height: 100%;
   background-color: #FFD74B;
@@ -64,15 +65,15 @@ const LoginPage = () => {
   return (
     <LoginForm>
       <Form className="Login-form">
-      <ImgIcon>
-            <img src="../images/Mess3.png" alt="navbar-logo" />
-          </ImgIcon>
+        <ImgIcon>
+          <img src="../images/Mess3.png" alt="navbar-logo" />
+        </ImgIcon>
         <Header>NBRLY</Header>
         <h2>
           Connect with like-minded people in your vicinity for sports,
           nightlife, and everything in between
         </h2>
-        
+
         <FormGroup>
           <Label>Username</Label>
           <Input type="email" placeholder="Email / Username"></Input>
@@ -83,8 +84,9 @@ const LoginPage = () => {
         </FormGroup>
 
         <Button className="btn-lg btn-block">Log in</Button>
-        <Button className="btn-lg btn-block">Sign up</Button>
-        {/* <Button className="btn-lg btn-block">Get Started</Button> */}
+        <Link to="/Signup">
+          <Button className="btn-lg btn-block">Get Started</Button>
+        </Link>
       </Form>
     </LoginForm>
   );
