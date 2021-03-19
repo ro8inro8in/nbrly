@@ -7,6 +7,7 @@ import Main from "./pages/Main";
 import Profile from "./pages/Profile";
 // import Footer from "./Footer";
 
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
