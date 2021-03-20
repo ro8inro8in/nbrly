@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import ActivitySelect from "../ActivitySelect";
+import Results from "../Results";
 
 const TitleHomeWrap= styled.div`
 
@@ -22,6 +23,7 @@ const Home = () => {
       <h2>What do you want to do today?</h2>
       </TitleHomeWrap>
       <ActivitySelect />
+      <Results />
     </>
   );
 };

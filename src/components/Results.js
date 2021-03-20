@@ -1,8 +1,13 @@
 import ResultItem from './ResultItem';
 
 const Results = () => {
-  return ( <ResultItem />
-   );
-}
- 
+  return (
+    <>
+      <ResultItem />
+      <ResultItem />
+      <ResultItem />
+    </>
+  );
+};
+
 export default Results;

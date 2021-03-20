@@ -1,7 +1,7 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import { FaBars } from "react-icons/fa";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { FaBars } from 'react-icons/fa';
 
 const Nav = styled.nav`
 background: #CFCFCF;
@@ -105,7 +105,7 @@ const NavLinks = styled(Link)`
   }
 `;
 
-const Navbar = ({ toggle }) => {
+const Navbar = ({ toggle, handleLogout }) => {
   return (
     <>
       <Nav>
@@ -125,7 +125,9 @@ const Navbar = ({ toggle }) => {
               <NavLinks to="/Profile">My Profile</NavLinks>
             </NavItem>
             <NavItem>
-              <NavLinks to="/">Logout</NavLinks>
+              <NavLinks onClick={handleLogout} to="/">
+                Logout
+              </NavLinks>
             </NavItem>
           </NavMenu>
         </NavContainer>
