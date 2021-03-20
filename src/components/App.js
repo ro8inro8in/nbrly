@@ -1,10 +1,9 @@
-import { useState } from 'react';
-import '../App.css';
-import { Route, Switch } from 'react-router-dom';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-import Main from './pages/Main';
-import Profile from './pages/Profile';
+import { useState } from "react";
+import "../App.css";
+import { Route, Switch } from "react-router-dom";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Main from "./pages/Main";
 // import Footer from "./Footer";
 
 function App() {
