@@ -67,8 +67,14 @@ const Button = styled.div`
 const SignUp = () => {
   const initialState = {
     fields: {
+      firstName: "",
+      lastName: "",
       email: "",
+      confrimEmail: "",
       password: "",
+      confirmPassword: "",
+      aboutMe: "",
+      
     },
   };
   const [fields, setFields] = useState(initialState.fields);
@@ -100,6 +106,26 @@ const handleSubmit = (event) => {
         </ImgIcon>
         <Header>NBRLY</Header>
         <h2>Give me all your bank details</h2>
+        <FormGroup>
+          <Label>First Name</Label>
+          <Input
+            name="FirstName"
+            type="FirstName"
+            placeholder="First Name"
+            value={fields.firstName}
+            onChange={handleFieldChange}
+          ></Input>
+        </FormGroup>
+        <FormGroup>
+          <Label>Last Name</Label>
+          <Input
+            name="lastName"
+            type="lastName"
+            placeholder="Last Name"
+            value={fields.lastName}
+            onChange={handleFieldChange}
+          ></Input>
+        </FormGroup>
 
         <FormGroup>
           <Label>Username</Label>
@@ -112,12 +138,32 @@ const handleSubmit = (event) => {
           ></Input>
         </FormGroup>
         <FormGroup>
+          <Label>Confirm Email</Label>
+          <Input
+            name="confrimEmail"
+            type="confrimEmail"
+            placeholder="Confrim Email"
+            value={fields.confrimEmail}
+            onChange={handleFieldChange}
+          ></Input>
+        </FormGroup>
+        <FormGroup>
           <Label>Password</Label>
           <Input
             name="password"
             type="password"
             placeholder="password"
             value={fields.password}
+            onChange={handleFieldChange}
+          ></Input>
+        </FormGroup>
+        <FormGroup>
+          <Label>Confim Password</Label>
+          <Input
+            name="confirmPassword"
+            type="confirmPassword"
+            placeholder="Confirm Password"
+            value={fields.confirmPassword}
             onChange={handleFieldChange}
           ></Input>
         </FormGroup>
