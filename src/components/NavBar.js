@@ -14,31 +14,24 @@ font-size: 1rem;
 position: sticky;
 top: 0;
 z-index: 10;
-border: 1px solid blue;
-
-
-
+//border: 1px solid blue;
 @media screen and (max-width: 960px) {
   transition: 0.8s all ease;
 }
 `;
-
 const NavContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   height: 80px;
   z-index: 1;
   width: 100%;
   padding: 0 24px;
   max-width: 1100px;
-  border: 1px solid red;
-
 `;
 const Banner = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: ;
   width: 50%;
-  border: 1px solid red;
 `;
 const NavLogo = styled.div`
   color: white;
@@ -47,25 +40,14 @@ const NavLogo = styled.div`
   justify-content: center;
   align-items: center;
   font-weight: bold;
-  // text-decoration: none;
-  // width: 186px;
-  // left: 706px;
-  // top: 13px;
-  border: 1px solid green;
-
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
     1px 1px 0 #000;
 `;
 const ImgIcon = styled.div`
   display: flex;
-  // justify-content: center;
-  // position: absolute;
+  justify-content: center;
   width: 81px;
   height: 91px;
-  // left: 500px;
-  // top: 0px;
-  border: 1px solid blue;
-
   @media screen and (max-width: 960px) {
     left: 300px;
   }
@@ -73,10 +55,8 @@ const ImgIcon = styled.div`
     left: 160px;
   }
 `;
-
 const MobileIcon = styled.div`
   display: none;
-
   @media screen and (max-width: 760px) {
     display: block;
     position: absolute;
@@ -88,7 +68,6 @@ const MobileIcon = styled.div`
     color: white;
   }
 `;
-
 const NavMenu = styled.ul`
   display: flex;
   align-items: center;
@@ -96,19 +75,15 @@ const NavMenu = styled.ul`
   text-align: center;
   margin-right: 72px;
   padding-top: 10px;
-  border: 1px solid red;
 
   @media screen and (max-width: 760px) {
     display: none;
   }
 `;
-
 const NavItem = styled.li`
   height: 80px;
-  border: 1px solid red;
-
+  //border: 1px solid red;
 `;
-
 const NavLinks = styled(Link)`
   color: white;
   display: flex;
@@ -117,13 +92,11 @@ const NavLinks = styled(Link)`
   padding: 1rem;
   height: 100%;
   cursor: pointer;
-  
 
   &.active {
     border-bottom: 3px solid red;
   }
 `;
-
 const Navbar = ({ toggle, handleLogout }) => {
   return (
     <>

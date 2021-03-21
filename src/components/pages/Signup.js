@@ -57,8 +57,6 @@ const Header = styled.div`
 
 const ImgIcon = styled.img`
   display: flex;
-  flex-direction: column;
-  align-items: center;
   width: 81px;
   height: 91px;
 
