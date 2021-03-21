@@ -9,25 +9,22 @@ import CheckBox from "../CheckBox";
 const MainContainer = styled.div`
   display: flex;
   flex-direction: row-reverse;
+  
 `;
 const ImgContainer = styled.div`
-  // display: flex;
-  // flex-direction: column;
   width: 50%;
-  border: 1px solid red;
+  padding: 50px;
+  // border: 1px solid red;
 `;
 const FormContainer = styled.div`
-  // display: flex;
-  // flex-direction: column;
   width: 50%;
-  border: 1px solid red;
+  
 `;
 
 const Banner = styled.div`
   display: flex;
-  
   width: 50%;
-  border: 1px solid red;
+  // border: 1px solid red;
 `;
 
 const LoginForm = styled.form`
@@ -37,7 +34,7 @@ const LoginForm = styled.form`
   justify-content: center;
   width: 100%;
   max-width: 960px;
-  padding: 10%;
+  // padding: 10%;
   margin: auto;
   height: 100%;
 `;
@@ -74,25 +71,23 @@ const ImgIcon = styled.img`
   }
 `;
 const ProfileImg = styled.img`
-  width: 75%;
+  width: 100%;
 `;
 
 const Button = styled.button`
   color: white;
   font-size: 1.5rem;
   font-weight: bold;
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
-  1px 1px 0 #000;
-  box-shadow: 0 8px 16px rgb(38 38 48 / 20%);  
-  width: 50%;
+  width: 100%;
   max-width: 330px;
-  padding: 5px;
   margin-top: 20px;
-  height: 100%;
-  background: #FFB800;
+  background: #ffb800;
   border: 0.5px solid #000000;
   cursor: pointer;
-  text-align: center
+  text-align: center;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+  box-shadow: 0 8px 16px rgb(38 38 48 / 20%);
 `;
 
 const SignUp = () => {
@@ -132,8 +127,8 @@ const SignUp = () => {
   return (
     <LoginForm>
       <Banner>
-      <ImgIcon src="../images/Mess3.png" alt="navbar-logo" />
-      <Header>NBRLY</Header>
+        <ImgIcon src="../images/Mess3.png" alt="navbar-logo" />
+        <Header>NBRLY</Header>
       </Banner>
       <MainContainer>
         <ImgContainer>
@@ -141,7 +136,11 @@ const SignUp = () => {
             src="../images/profileplaceholder.png"
             alt="profile-picture"
           />
+          <Button onClick={handleSubmit} className="btn-lg btn-block">
+            Upload Image
+          </Button>
         </ImgContainer>
+
         <FormContainer>
           <FormGroup>
             <Label>First Name</Label>
@@ -204,26 +203,25 @@ const SignUp = () => {
               onChange={handleFieldChange}
             ></Input>
           </FormGroup>
-         
         </FormContainer>
       </MainContainer>
-      
-        <Label>Interests</Label>
+
+      <Label>Interests</Label>
       <CheckBox />
-      
-            <Label>About Me</Label>
-            <Input
-              name="aboutMe"
-              style={{width: "100%", height: "100%"}}
-              type="textarea"
-              placeholder="About Me"
-              value={fields.aboutMe}
-              onChange={handleFieldChange}
-            ></Input>
-              <Button onClick={handleSubmit} className="btn-lg btn-block">
+
+      <Label>About Me</Label>
+      <Input
+        name="aboutMe"
+        style={{ width: "100%", height: "100%" }}
+        type="textarea"
+        placeholder="About Me"
+        value={fields.aboutMe}
+        onChange={handleFieldChange}
+      ></Input>
+      <Button onClick={handleSubmit} className="btn-lg btn-block">
         Create Profile
       </Button>
-          
+
       {/* <Link to="/Signup"> */}
     </LoginForm>
   );
