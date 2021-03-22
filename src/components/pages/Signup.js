@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Form, FormGroup, Label, Input } from "reactstrap";
 // import { Link } from "react-router-dom";
-import firebase from "firebase/app";
 import "firebase/auth";
 import CheckBox from "../CheckBox";
+import { firebase, db } from "../../index";
+import interests from "../../lib/interests"
 
 const MainContainer = styled.div`
   display: flex;
   flex-direction: row-reverse;
-  
 `;
 const ImgContainer = styled.div`
   width: 50%;
@@ -18,7 +18,6 @@ const ImgContainer = styled.div`
 `;
 const FormContainer = styled.div`
   width: 50%;
-  
 `;
 
 const Banner = styled.div`
@@ -93,14 +92,16 @@ const SignUp = () => {
     fields: {
       firstName: "",
       lastName: "",
+      age: "",
       email: "",
-      confrimEmail: "",
+      confirmEmail: "",
       password: "",
       confirmPassword: "",
       aboutMe: "",
     },
   };
   const [fields, setFields] = useState(initialState.fields);
+  const [checkedItems, setCheckedItems] = useState([]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -108,20 +109,43 @@ const SignUp = () => {
       .auth()
       .createUserWithEmailAndPassword(fields.email, fields.password)
       .then((userCredential) => {
-        const user = userCredential.user;
-        console.log(user);
+        const uid = userCredential.user.uid
+        const userDocRef = firebase.firestore()
+        .collection('users').doc(uid)
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(error);
       });
+  
   };
 
   const handleFieldChange = (event) => {
-    console.log("gin");
     setFields({ ...fields, [event.target.name]: event.target.value });
   };
+
+  const handleBoxChange = (event) => {
+    console.log(event.target.checked)
+    const { name, checked } = event.target 
+    if (checked){
+    setCheckedItems(items => {
+      const index = items.indexOf(name)
+      return items.splice(index, 1)
+    }
+  )
+    } else {
+      setCheckedItems(items => [...items, name])
+   }
+};
+  const checkboxes = interests.map(int => {
+    return (
+      <label key={int}>
+      {int}
+      <CheckBox name={int} onChange={handleBoxChange} checked={checkedItems.includes(int)}  />
+      </label>
+    )
+  })
   return (
     <LoginForm>
       <Banner>
@@ -143,8 +167,8 @@ const SignUp = () => {
           <FormGroup>
             <Label>First Name</Label>
             <Input
-              name="FirstName"
-              type="FirstName"
+              name="firstName"
+              type="firstName"
               placeholder="First Name"
               value={fields.firstName}
               onChange={handleFieldChange}
@@ -154,19 +178,27 @@ const SignUp = () => {
             <Label>Last Name</Label>
             <Input
               name="lastName"
-              type="lastName"
               placeholder="Last Name"
               value={fields.lastName}
               onChange={handleFieldChange}
             ></Input>
           </FormGroup>
+          <FormGroup>
+            <Label>Age</Label>
+            <Input
+              name="age"
+              placeholder="Age"
+              value={fields.age}
+              onChange={handleFieldChange}
+            ></Input>
+          </FormGroup>
 
           <FormGroup>
-            <Label>Username</Label>
+            <Label>Email</Label>
             <Input
               name="email"
               type="email"
-              placeholder="Email / Username"
+              placeholder="Email"
               value={fields.email}
               onChange={handleFieldChange}
             ></Input>
@@ -174,10 +206,10 @@ const SignUp = () => {
           <FormGroup>
             <Label>Confirm Email</Label>
             <Input
-              name="confrimEmail"
-              type="confrimEmail"
-              placeholder="Confrim Email"
-              value={fields.confrimEmail}
+              name="confirmEmail"
+              type="confirmEmail"
+              placeholder="Confirm Email"
+              value={fields.confirmEmail}
               onChange={handleFieldChange}
             ></Input>
           </FormGroup>
@@ -192,10 +224,10 @@ const SignUp = () => {
             ></Input>
           </FormGroup>
           <FormGroup>
-            <Label>Confim Password</Label>
+            <Label>Confirm Password</Label>
             <Input
               name="confirmPassword"
-              type="confirmPassword"
+              type="password"
               placeholder="Confirm Password"
               value={fields.confirmPassword}
               onChange={handleFieldChange}
@@ -205,8 +237,7 @@ const SignUp = () => {
       </MainContainer>
 
       <Label>Interests</Label>
-      <CheckBox />
-
+      {checkboxes}
       <Label>About Me</Label>
       <Input
         name="aboutMe"

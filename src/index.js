@@ -4,7 +4,8 @@ import './index.css';
 import App from './components/App';
 import { BrowserRouter } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import firebase from 'firebase/app';
+import firebase from 'firebase';
+import 'firebase/firestore';
 
 firebase.initializeApp({
   apiKey: 'AIzaSyCCRhi9kXg1EzRPtLjJJa0rGcwisL0sXA0',
@@ -16,7 +17,7 @@ firebase.initializeApp({
   measurementId: 'G-C313EYFCQC',
 });
 
-console.log(firebase.apps[0].options);
+const db = firebase.firestore()
 
 ReactDOM.render(
   <React.StrictMode>
@@ -26,3 +27,7 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
+
+export {
+  firebase, db
+}
