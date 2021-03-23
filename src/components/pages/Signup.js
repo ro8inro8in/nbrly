@@ -81,8 +81,6 @@ const Header = styled.div`
     1px 1px 0 #000;
 `;
 
-
-
 const InterestsDiv = styled.div`
   width: 100%;
   background: white;
@@ -128,6 +126,12 @@ const Button = styled.button`
   box-shadow: 0 8px 16px rgb(38 38 48 / 20%);
 `;
 
+const FileUpload = styled.input`
+  // border: 1px solid red;
+  text-align: center;
+  margin: 0 auto;
+`;
+
 const SignUp = () => {
   const initialState = {
     fields: {
@@ -140,28 +144,48 @@ const SignUp = () => {
       confirmPassword: '',
       aboutMe: '',
     },
-    checkedItems: interests.map((interest) => {
+    interestsSelectors: interests.map((interest) => {
       return { value: interest, isChecked: false };
     }),
+    selectedFile: null,
   };
 
   const [fields, setFields] = useState(initialState.fields);
-  const [checkedItems, setCheckedItems] = useState(initialState.checkedItems);
+  const [interestsSelectors, setInterestsSelectors] = useState(
+    initialState.interestsSelectors
+  );
+  const [selectedFile, setSelectedFile] = useState(initialState.selectedFile);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(fields.email, fields.password)
-      .then((userCredential) => {
-        const uid = userCredential.user.uid;
-        const userDocRef = firebase.firestore().collection('users').doc(uid);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(error);
+    const userInterests = [];
+    interestsSelectors.forEach((interest) => {
+      if (interest.isChecked) {
+        userInterests.push(interest.value);
+      }
+    });
+    try {
+      const userCredential = await firebase
+        .auth()
+        .createUserWithEmailAndPassword(fields.email, fields.password);
+      const uid = userCredential.user.uid;
+      const storageRef = firebase.storage().ref();
+      const userPicRef = storageRef.child(`${uid}-image.jpg`);
+      await userPicRef.put(selectedFile);
+      const imageURL = await userPicRef.getDownloadURL();
+      firebase.firestore().collection('users').doc(uid).set({
+        firstName: fields.firstName,
+        lastName: fields.lastName,
+        age: fields.age,
+        aboutMe: fields.aboutMe,
+        interests: userInterests,
+        profileImage: imageURL
       });
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(error);
+    }
   };
 
   const handleFieldChange = (event) => {
@@ -170,18 +194,22 @@ const SignUp = () => {
 
   const handleBoxChange = (event) => {
     const { name, defaultChecked } = event.target;
-    console.log(checkedItems);
+    console.log(interestsSelectors);
     if (defaultChecked) {
-      setCheckedItems((items) => {
+      setInterestsSelectors((items) => {
         items.find((item) => item.value === name).isChecked = false;
         return [...items];
       });
     } else {
-      setCheckedItems((items) => {
+      setInterestsSelectors((items) => {
         items.find((item) => item.value === name).isChecked = true;
         return [...items];
       });
     }
+  };
+
+  const fileSelectedHandler = (event) => {
+    setSelectedFile(event.target.files[0]);
   };
 
   const checkboxes = interests.map((interest) => {
@@ -191,11 +219,12 @@ const SignUp = () => {
         name={interest}
         onChange={handleBoxChange}
         defaultChecked={
-          checkedItems.find((item) => item.value === interest).isChecked
+          interestsSelectors.find((item) => item.value === interest).isChecked
         }
       />
     );
   });
+
   return (
     <LoginForm>
       <Banner>
@@ -208,12 +237,17 @@ const SignUp = () => {
             src="../images/profileplaceholder.png"
             alt="profile-picture"
           />
-          <Button onClick={handleSubmit}>Upload Image</Button>
+          <FileUpload
+            type="file"
+            accept="image/png, image/jpeg"
+            onChange={fileSelectedHandler}
+          />
+          <Button>Upload Image</Button>
         </UploadImageContainer>
 
         <FormContainer>
           <FormGroup>
-            <Label for="firstname">First Name</Label>
+            <Label htmlFor="firstname">First Name</Label>
             <Input
               id="firstname"
               name="firstName"
@@ -224,7 +258,7 @@ const SignUp = () => {
             ></Input>
           </FormGroup>
           <FormGroup>
-            <Label for="lastname">Last Name</Label>
+            <Label htmlFor="lastname">Last Name</Label>
             <Input
               id="lastname"
               name="lastName"
@@ -234,7 +268,7 @@ const SignUp = () => {
             ></Input>
           </FormGroup>
           <FormGroup>
-            <Label for="age">Age</Label>
+            <Label htmlFor="age">Age</Label>
             <Input
               id="age"
               name="age"
@@ -245,7 +279,7 @@ const SignUp = () => {
           </FormGroup>
 
           <FormGroup>
-            <Label for="email">Email</Label>
+            <Label htmlFor="email">Email</Label>
             <Input
               id="email"
               name="email"
@@ -256,10 +290,10 @@ const SignUp = () => {
             ></Input>
           </FormGroup>
           <FormGroup>
-            <Label for="confirm-email">Confirm Email</Label>
+            <Label htmlFor="confirm-email">Confirm Email</Label>
             <Input
               id="confirm-email"
-              name="confirm-email"
+              name="confirmEmail"
               type="email"
               placeholder="Please type your email again"
               value={fields.confirmEmail}
@@ -267,7 +301,7 @@ const SignUp = () => {
             ></Input>
           </FormGroup>
           <FormGroup>
-            <Label for="password">Password</Label>
+            <Label htmlFor="password">Password</Label>
             <Input
               id="password"
               name="password"
@@ -278,10 +312,10 @@ const SignUp = () => {
             ></Input>
           </FormGroup>
           <FormGroup>
-            <Label for="confirm-password">Confirm Password</Label>
+            <Label htmlFor="confirm-password">Confirm Password</Label>
             <Input
               id="confirm-password"
-              name="confirm-password"
+              name="confirmPassword"
               type="password"
               placeholder="Please type your password again"
               value={fields.confirmPassword}

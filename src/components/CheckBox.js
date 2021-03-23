@@ -14,13 +14,14 @@ const CheckBox = ({ name, defaultChecked = false, onChange }) => {
   return (
     <>
       <Input
+        id={name}
         type="checkbox"
         name={name}
         default
         defaultChecked={defaultChecked}
         onChange={onChange}
       />
-      <Label>{name}</Label>
+      <Label htmlFor={name}>{name}</Label>
     </>
   );
 };
