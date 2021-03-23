@@ -12,8 +12,7 @@ const interests = [
   'badminton',
   'table tennis',
   'board games',
-  'eating out - veggie',
-  'eating out - meat',
+  'eating out',
   'coffee',
   'beer',
   'urban exploring',
@@ -28,11 +27,11 @@ const interests = [
   'bowling',
   'cheese rolling',
   'shopping',
-  'theme park',
-  'tea ceremony',
-  'gong bath',
+  'theme parks',
+  'tea ceremonies',
+  'gong baths',
   'yoga',
-  'cooking'
-]
+  'cooking',
+];
 
 export default interests;
