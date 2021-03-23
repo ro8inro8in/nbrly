@@ -1,7 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
-import ActivitySelect from '../ActivitySelect';
-import Results from '../Results';
+import React from "react";
+import styled from "styled-components";
+import ActivitySelect from "../ActivitySelect";
+import Results from "../Results";
 
 const TitleHomeWrap = styled.div`
 
