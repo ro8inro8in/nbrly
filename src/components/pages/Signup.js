@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { Form, FormGroup, Label, Input } from "reactstrap";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import { Form, FormGroup, Label, Input } from 'reactstrap';
 // import { Link } from "react-router-dom";
-import "firebase/auth";
-import CheckBox from "../CheckBox";
-import { firebase, db } from "../../index";
-import interests from "../../lib/interests"
+import 'firebase/auth';
+import CheckBox from '../CheckBox';
+import { firebase, db } from '../../index';
+import interests from '../../lib/interests';
 
 const MainContainer = styled.div`
   display: flex;
@@ -90,35 +90,37 @@ const Button = styled.button`
 const SignUp = () => {
   const initialState = {
     fields: {
-      firstName: "",
-      lastName: "",
-      age: "",
-      email: "",
-      confirmEmail: "",
-      password: "",
-      confirmPassword: "",
-      aboutMe: "",
+      firstName: '',
+      lastName: '',
+      age: '',
+      email: '',
+      confirmEmail: '',
+      password: '',
+      confirmPassword: '',
+      aboutMe: '',
     },
+    checkedItems: interests.map((interest) => {
+      return { value: interest, isChecked: false };
+    }),
   };
-  const [fields, setFields] = useState(initialState.fields);
-  const [checkedItems, setCheckedItems] = useState([]);
 
+  const [fields, setFields] = useState(initialState.fields);
+  const [checkedItems, setCheckedItems] = useState(initialState.checkedItems);
+ 
   const handleSubmit = (event) => {
     event.preventDefault();
     firebase
       .auth()
       .createUserWithEmailAndPassword(fields.email, fields.password)
       .then((userCredential) => {
-        const uid = userCredential.user.uid
-        const userDocRef = firebase.firestore()
-        .collection('users').doc(uid)
+        const uid = userCredential.user.uid;
+        const userDocRef = firebase.firestore().collection('users').doc(uid);
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(error);
       });
-  
   };
 
   const handleFieldChange = (event) => {
@@ -126,26 +128,36 @@ const SignUp = () => {
   };
 
   const handleBoxChange = (event) => {
-    console.log(event.target.checked)
-    const { name, checked } = event.target 
-    if (checked){
-    setCheckedItems(items => {
-      const index = items.indexOf(name)
-      return items.splice(index, 1)
-    }
-  )
+    const { name, defaultChecked } = event.target;
+    console.log(checkedItems);
+    if (defaultChecked) {
+      setCheckedItems((items) => {
+        items.find((item) => item.value === name).isChecked = false;
+        return [...items];
+      });
     } else {
-      setCheckedItems(items => [...items, name])
-   }
-};
-  const checkboxes = interests.map(int => {
+      setCheckedItems((items) => {
+        items.find((item) => item.value === name).isChecked = true;
+        return [...items];
+      });
+    }
+    
+  };
+
+  const checkboxes = interests.map((interest) => {
     return (
-      <label key={int}>
-      {int}
-      <CheckBox name={int} onChange={handleBoxChange} checked={checkedItems.includes(int)}  />
+      <label key={interest}>
+        {interest}
+        <CheckBox
+          name={interest}
+          onChange={handleBoxChange}
+          defaultChecked={
+            checkedItems.find((item) => item.value === interest).isChecked
+          }
+        />
       </label>
-    )
-  })
+    );
+  });
   return (
     <LoginForm>
       <Banner>
@@ -241,7 +253,7 @@ const SignUp = () => {
       <Label>About Me</Label>
       <Input
         name="aboutMe"
-        style={{ width: "100%", height: "100%" }}
+        style={{ width: '100%', height: '100%' }}
         type="textarea"
         placeholder="About Me"
         value={fields.aboutMe}

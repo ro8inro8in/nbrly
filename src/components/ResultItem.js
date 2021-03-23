@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-// import pic from '../images/results-item-pic-placeholder.svg';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import messageBubbles from '../images/message-bubbles.svg';
 
 const ItemWrap = styled.div`
@@ -47,7 +46,7 @@ const UserName = styled.h3`
   }
 `;
 
-// const Icon = styled(FontAwesomeIcon)``;
+const Icon = styled(FontAwesomeIcon)``;
 
 const UserLocation = styled.p`
   margin: 0;
@@ -79,9 +78,9 @@ const ResultItem = ({ userID, pic, name, location }) => {
       <UserPic src={pic} alt="user's profile picture" />
       <UserInfoWrap>
         <UserName>{name}</UserName>
-        {/* <UserLocation>
+        <UserLocation>
           <Icon icon={faMapMarkerAlt} /> {location}
-        </UserLocation> */}
+        </UserLocation>
       </UserInfoWrap>
       <ProfileLink>View Profile</ProfileLink>
 
