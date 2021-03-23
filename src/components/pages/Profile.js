@@ -38,7 +38,7 @@ const Profile = () => {
   return (
     <>
       <UserCard>
-        <UserImg src="../images/unnamed.png" alt="user" />
+        <UserImg src="../images/profileplaceholder.png" alt="user" />
 
         <h1>Name</h1>
         <EditProfileLink>Edit Profile</EditProfileLink>
