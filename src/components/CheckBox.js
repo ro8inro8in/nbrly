@@ -1,14 +1,27 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const Label = styled.label`
+  margin: 5px 15px 5px 3px;
+`;
+
+const Input = styled.input`
+  margin: 5px;
+  justify-self: start;
+`;
 
 const CheckBox = ({ name, defaultChecked = false, onChange }) => {
   return (
-    <input
-      type="checkbox"
-      name={name}
-      default
-      defaultChecked={defaultChecked}
-      onChange={onChange}
-    />
+    <>
+      <Input
+        type="checkbox"
+        name={name}
+        default
+        defaultChecked={defaultChecked}
+        onChange={onChange}
+      />
+      <Label>{name}</Label>
+    </>
   );
 };
 
