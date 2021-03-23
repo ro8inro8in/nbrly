@@ -5,7 +5,7 @@ import { FaBars } from "react-icons/fa";
 
 const Nav = styled.nav`
 background: #CFCFCF;
-height: 80px:
+height: 50px:
 margin-top -80px;
 display: flex;
 justify-content: center;
@@ -19,23 +19,23 @@ z-index: 10;
   transition: 0.8s all ease;
 }
 `;
-const NavContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  height: 80px;
-  z-index: 1;
-  width: 100%;
-  padding: 0 24px;
-  max-width: 1100px;
-`;
+// const NavContainer = styled.div`
+//   display: flex;
+//   justify-content: center;
+//   height: 80px;
+//   z-index: 1;
+//   width: 100%;
+//   padding: 0 24px;
+//   max-width: 1100px;
+// `;
 const Banner = styled.div`
   display: flex;
-  justify-content: ;
+  justify-content: left;
   width: 50%;
 `;
 const NavLogo = styled.div`
   color: white;
-  font-size: 2.5rem;
+  font-size: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -46,8 +46,8 @@ const NavLogo = styled.div`
 const ImgIcon = styled.div`
   display: flex;
   justify-content: center;
-  width: 81px;
-  height: 91px;
+  width: 51px;
+  height: 61px;
   @media screen and (max-width: 960px) {
     left: 300px;
   }
@@ -72,9 +72,6 @@ const NavMenu = styled.ul`
   display: flex;
   align-items: center;
   list-style: none;
-  text-align: center;
-  margin-right: 72px;
-  padding-top: 10px;
 
   @media screen and (max-width: 760px) {
     display: none;
@@ -101,30 +98,28 @@ const Navbar = ({ toggle, handleLogout }) => {
   return (
     <>
       <Nav>
-        <NavContainer>
-          <Banner>
-            <NavLogo>NBRLY</NavLogo>
-            <ImgIcon>
-              <img src="../images/Mess3.png" alt="navbar-logo" />
-            </ImgIcon>
-          </Banner>
-          <MobileIcon onClick={toggle}>
-            <FaBars />
-          </MobileIcon>
-          <NavMenu>
-            <NavItem>
-              <NavLinks to="/Home">Home</NavLinks>
-            </NavItem>
-            <NavItem>
-              <NavLinks to="/Profile">My Profile</NavLinks>
-            </NavItem>
-            <NavItem>
-              <NavLinks onClick={handleLogout} to="/">
-                Logout
-              </NavLinks>
-            </NavItem>
-          </NavMenu>
-        </NavContainer>
+        <Banner>
+          <ImgIcon>
+            <img src="../images/Mess3.png" alt="navbar-logo" />
+          </ImgIcon>
+          <NavLogo>NBRLY</NavLogo>
+        </Banner>
+        <MobileIcon onClick={toggle}>
+          <FaBars />
+        </MobileIcon>
+        <NavMenu>
+          <NavItem>
+            <NavLinks to="/Home">Home</NavLinks>
+          </NavItem>
+          <NavItem>
+            <NavLinks to="/Profile">My Profile</NavLinks>
+          </NavItem>
+          <NavItem>
+            <NavLinks onClick={handleLogout} to="/">
+              Logout
+            </NavLinks>
+          </NavItem>
+        </NavMenu>
       </Nav>
     </>
   );
