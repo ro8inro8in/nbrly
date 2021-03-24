@@ -3,8 +3,7 @@ import styled from "styled-components";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import TwitterIcon from "@material-ui/icons/Twitter";
 
-const FooterContainer = styled.div`
-  padding-top: 5em;
+const Container = styled.div`
   font-size: 0.8em;
   display: flex;
   flex-direction: column;
@@ -19,9 +18,11 @@ const SocialIcon = styled.a`
   padding: 2em;
 `;
 
+// const Copyright = styled.div``;
+
 const Footer = () => {
   return (
-    <FooterContainer>
+    <Container>
       <SocialLinks>
         <SocialIcon>
           <FacebookIcon />
@@ -30,9 +31,8 @@ const Footer = () => {
           <TwitterIcon />
         </SocialIcon>
       </SocialLinks>
-
       <p>Copyright NBRLY 2021</p>
-    </FooterContainer>
+    </Container>
   );
 };
 
