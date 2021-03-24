@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { Form, FormGroup, Input } from 'reactstrap';
+import React, { useState } from "react";
+import styled from "styled-components";
+import { Form, FormGroup, Input } from "reactstrap";
 // import { Link } from "react-router-dom";
-import 'firebase/auth';
-import CheckBox from '../CheckBox';
-import { firebase, db } from '../../index';
-import interests from '../../lib/interests';
+import "firebase/auth";
+import CheckBox from "../CheckBox";
+import { firebase, db } from "../../index";
+import interests from "../../lib/interests";
+const geofire = require("geofire-common");
 
 const Banner = styled.div`
   display: flex;
@@ -132,17 +133,18 @@ const FileUpload = styled.input`
   margin: 0 auto;
 `;
 
-const SignUp = () => {
+const SignUp = ({ geolocation }) => {
+  console.log(geolocation.longitude, geolocation.latitude);
   const initialState = {
     fields: {
-      firstName: '',
-      lastName: '',
-      age: '',
-      email: '',
-      confirmEmail: '',
-      password: '',
-      confirmPassword: '',
-      aboutMe: '',
+      firstName: "",
+      lastName: "",
+      age: "",
+      email: "",
+      confirmEmail: "",
+      password: "",
+      confirmPassword: "",
+      aboutMe: "",
     },
     interestsSelectors: interests.map((interest) => {
       return { value: interest, isChecked: false };
@@ -155,6 +157,11 @@ const SignUp = () => {
     initialState.interestsSelectors
   );
   const [selectedFile, setSelectedFile] = useState(initialState.selectedFile);
+
+  const hash = geofire.geohashForLocation([
+    geolocation.latitude,
+    geolocation.longitude,
+  ]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -173,17 +180,21 @@ const SignUp = () => {
       const userPicRef = storageRef.child(`${uid}-image.jpg`);
       await userPicRef.put(selectedFile);
       const imageURL = await userPicRef.getDownloadURL();
-      firebase.firestore().collection('users').doc(uid).set({
+      await firebase.firestore().collection("users").doc(uid).set({
         firstName: fields.firstName,
         lastName: fields.lastName,
         age: fields.age,
         aboutMe: fields.aboutMe,
         interests: userInterests,
-        profileImage: imageURL
+        profileImage: imageURL,
+        geohash: hash,
+        latitude: geolocation.latitude,
+        longitude: geolocation.longitude,
       });
+      alert("Profile successfully created.");
     } catch (error) {
-      const errorCode = error.code;
-      const errorMessage = error.message;
+      alert("Sorry, something went wrong. Please try again.");
+
       console.log(error);
     }
   };
@@ -333,7 +344,7 @@ const SignUp = () => {
       <SubHeading>About Me</SubHeading>
       <Input
         name="aboutMe"
-        style={{ width: '100%', height: '100%', marginBottom: '30px' }}
+        style={{ width: "100%", height: "100%", marginBottom: "30px" }}
         type="textarea"
         placeholder="Introduce yourself!"
         value={fields.aboutMe}

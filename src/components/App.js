@@ -8,6 +8,7 @@ import Footer from "./Footer";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [geolocation, setGeolocation] = useState();
 
   const handleLogout = () => {
     setIsLoggedIn(false);
@@ -15,8 +16,10 @@ function App() {
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
-      console.log("Latitude is :", position.coords.latitude);
-      console.log("Longitude is :", position.coords.longitude);
+      setGeolocation({
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+      });
     });
   }, []);
 
@@ -30,7 +33,7 @@ function App() {
             <Login />
           </Route>
           <Route exact path="/Signup">
-            <Signup />
+            <Signup geolocation={geolocation} />
           </Route>
         </Switch>
       )}
