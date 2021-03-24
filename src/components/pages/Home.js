@@ -14,6 +14,7 @@ align-items: center;
 
 @media screen and (max-width: 960px) {
   transition: 0.8s all ease;
+  text-align: center;
 }
 `;
 const Home = () => {

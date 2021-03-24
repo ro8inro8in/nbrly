@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import FacebookIcon from "@material-ui/icons/Facebook";
-import TwitterIcon from "@material-ui/icons/Twitter";
+// import FacebookIcon from "@material-ui/icons/Facebook";
+// import TwitterIcon from "@material-ui/icons/Twitter";
 
 const FooterContainer = styled.div`
   padding-top: 5em;
@@ -24,10 +24,10 @@ const Footer = () => {
     <FooterContainer>
       <SocialLinks>
         <SocialIcon>
-          <FacebookIcon />
+          {/* <FacebookIcon /> */}
         </SocialIcon>
         <SocialIcon>
-          <TwitterIcon />
+          {/* <TwitterIcon /> */}
         </SocialIcon>
       </SocialLinks>
 

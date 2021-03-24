@@ -16,7 +16,7 @@ const Banner = styled.div`
 
 const ImgIcon = styled.img`
   display: flex;
-  width: 81px;
+  width: 91px;
   height: 91px;
 
   top: 0px;
