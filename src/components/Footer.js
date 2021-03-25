@@ -8,6 +8,10 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+    bottom: 0;
+    hight: 100%;
+  border: 1px solid red; 
 `;
 
 const SocialLinks = styled.div`
