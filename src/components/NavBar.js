@@ -83,11 +83,13 @@ const NavItem = styled.li`
 `;
 const NavLinks = styled(Link)`
   color: white;
+  font-weight: bold;
+  font-size: 1rem;
   display: flex;
   align-items: center;
   text-decoration: none;
   padding: 1rem;
-  height: 100%;
+  height: 115%;
   cursor: pointer;
 
   &.active {

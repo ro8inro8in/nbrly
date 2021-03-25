@@ -8,14 +8,18 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: relative;
-    bottom: 0;
-    hight: 100%;
-  border: 1px solid red; 
+  margin-top: auto;
+  // border: 1px solid red;
+  
+  @media screen and (max-width: 760px) {
+    font-size: 0.4em;
+  }
 `;
+
 
 const SocialLinks = styled.div`
   padding: 1em;
+  
 `;
 
 const SocialIcon = styled.a`
@@ -24,17 +28,19 @@ const SocialIcon = styled.a`
 
 const Footer = () => {
   return (
-    <Container>
-      <SocialLinks>
-        <SocialIcon>
-          <FacebookIcon />
-        </SocialIcon>
-        <SocialIcon>
-          <TwitterIcon />
-        </SocialIcon>
-      </SocialLinks>
-      <p>Copyright NBRLY 2021</p>
-    </Container>
+   
+      <Container>
+        <SocialLinks>
+          <SocialIcon>
+            <FacebookIcon />
+          </SocialIcon>
+          <SocialIcon>
+            <TwitterIcon />
+          </SocialIcon>
+        </SocialLinks>
+        <p>Copyright NBRLY 2021</p>
+      </Container>
+   
   );
 };
 
