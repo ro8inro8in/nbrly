@@ -7,11 +7,16 @@ import Main from "./pages/Main";
 import Footer from "./Footer";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [geolocation, setGeolocation] = useState();
 
   const handleLogout = () => {
     setIsLoggedIn(false);
+  };
+
+  // does this belong here?
+  const handleLogin = () => {
+    setIsLoggedIn(true);
   };
 
   useEffect(() => {
@@ -30,10 +35,10 @@ function App() {
       ) : (
         <Switch>
           <Route exact path="/">
-            <Login />
+            <Login handleLogin={handleLogin} />
           </Route>
           <Route exact path="/Signup">
-            <Signup geolocation={geolocation} />
+            <Signup geolocation={geolocation} handleLogin={handleLogin} />
           </Route>
         </Switch>
       )}

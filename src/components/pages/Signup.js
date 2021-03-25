@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { FormGroup, Input } from 'reactstrap';
+import React, { useState } from "react";
+import styled from "styled-components";
+import { FormGroup, Input } from "reactstrap";
 // import { Link } from "react-router-dom";
-import 'firebase/auth';
-import CheckBox from '../CheckBox';
-import { firebase, db } from '../../index';
-import interests from '../../lib/interests';
-const geofire = require('geofire-common');
+import "firebase/auth";
+import CheckBox from "../CheckBox";
+import { firebase, db } from "../../index";
+import interests from "../../lib/interests";
+const geofire = require("geofire-common");
 
 const LoginForm = styled.form`
   display: flex;
@@ -184,23 +184,23 @@ const Button = styled.button`
   } ;
 `;
 
-const SignUp = ({ geolocation }) => {
+const SignUp = ({ geolocation, handleLogin }) => {
   const initialState = {
     fields: {
-      firstName: '',
-      lastName: '',
-      age: '',
-      email: '',
-      confirmEmail: '',
-      password: '',
-      confirmPassword: '',
-      aboutMe: '',
+      firstName: "",
+      lastName: "",
+      age: "",
+      email: "",
+      confirmEmail: "",
+      password: "",
+      confirmPassword: "",
+      aboutMe: "",
     },
     interestsSelectors: interests.map((interest) => {
       return { value: interest, isChecked: false };
     }),
     selectedFile: null,
-    imagePreview: '',
+    imagePreview: "",
   };
 
   const [fields, setFields] = useState(initialState.fields);
@@ -236,7 +236,7 @@ const SignUp = ({ geolocation }) => {
       const userPicRef = storageRef.child(`${uid}-image.jpg`);
       await userPicRef.put(selectedFile);
       const imageURL = await userPicRef.getDownloadURL();
-      await firebase.firestore().collection('users').doc(uid).set({
+      await firebase.firestore().collection("users").doc(uid).set({
         firstName: fields.firstName,
         lastName: fields.lastName,
         age: fields.age,
@@ -247,9 +247,11 @@ const SignUp = ({ geolocation }) => {
         latitude: geolocation.latitude,
         longitude: geolocation.longitude,
       });
-      alert('Profile successfully created.');
+      alert("Profile successfully created.");
+      onclick = { handleLogin };
+      window.location.href = "/Home";
     } catch (error) {
-      alert('Sorry, something went wrong. Please try again.');
+      alert("Sorry, something went wrong. Please try again.");
 
       console.log(error);
     }
@@ -305,7 +307,7 @@ const SignUp = ({ geolocation }) => {
           <CustomFileUpload>
             Choose image
             <input
-              style={{ display: 'none' }}
+              style={{ display: "none" }}
               type="file"
               accept="image/png, image/jpeg"
               onChange={fileSelectedHandler}
@@ -401,7 +403,7 @@ const SignUp = ({ geolocation }) => {
       <SubHeading>About Me</SubHeading>
       <Input
         name="aboutMe"
-        style={{ width: '100%', height: '100%', marginBottom: '30px' }}
+        style={{ width: "100%", height: "100%", marginBottom: "30px" }}
         type="textarea"
         placeholder="Introduce yourself!"
         value={fields.aboutMe}
