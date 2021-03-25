@@ -1,25 +1,39 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { FormGroup, Input } from "reactstrap";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import { FormGroup, Input } from 'reactstrap';
 // import { Link } from "react-router-dom";
-import "firebase/auth";
-import CheckBox from "../CheckBox";
-import { firebase, db } from "../../index";
-import interests from "../../lib/interests";
-const geofire = require("geofire-common");
+import 'firebase/auth';
+import CheckBox from '../CheckBox';
+import { firebase, db } from '../../index';
+import interests from '../../lib/interests';
+const geofire = require('geofire-common');
+
+const LoginForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  width: 100%;
+  height: 100%;
+  @media screen and (max-width: 700px) {
+    padding: 3px;
+  } ;
+`;
 
 const Banner = styled.div`
   display: flex;
   width: 50%;
-  // border: 1px solid red;
   justify-content: center;
+  @media screen and (max-width: 700px) {
+    height: 85px;
+  } ;
 `;
 
 const ImgIcon = styled.img`
   display: flex;
   width: 91px;
   height: 91px;
-
   top: 0px;
   @media screen and (max-width: 960px) {
     left: 300px;
@@ -34,6 +48,10 @@ const MainContainer = styled.div`
   flex-direction: row-reverse;
   width: 100%;
   margin-top: 40px;
+  @media screen and (max-width: 700px) {
+    flex-direction: column;
+    align-items: center;
+  } ;
 `;
 
 const UploadImageContainer = styled.div`
@@ -43,27 +61,55 @@ const UploadImageContainer = styled.div`
   width: 50%;
   padding: 20px;
   margin-left: 5rem;
-  //order: 1px solid red;
+  @media screen and (max-width: 700px) {
+    width: 100%;
+    margin: 0;
+    padding: 5px;
+    margin-bottom: 15px;
+  } ;
 `;
 
 const ProfileImg = styled.img`
-  width: 60%;
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 30px;
+  border: 5px solid white;
+  @media screen and (max-width: 700px) {
+    width: 180px;
+    height: 180px;
+    margin-bottom: 10px;
+  } ;
+`;
+
+const CustomFileUpload = styled.label`
+  width: 230px;
+  height: 52px;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  background: #ffb800;
+  border: 0.5px solid #000000;
+  border-radius: 5px;
+  padding: 3px 0;
+  cursor: pointer;
+  text-align: center;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+  box-shadow: 0 8px 16px rgb(38 38 48 / 20%);
+  @media screen and (max-width: 700px) {
+    font-size: 1.3rem;
+    width: 180px;
+    height: 40px;
+  } ;
 `;
 
 const FormContainer = styled.div`
   width: 50%;
-`;
-
-const LoginForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: 960px;
-  // padding: 10%;
-  margin: auto;
-  height: 100%;
+  @media screen and (max-width: 700px) {
+    width: 90%;
+  } ;
 `;
 
 const Header = styled.div`
@@ -75,7 +121,6 @@ const Header = styled.div`
   text-align: center;
   font-weight: bold;
   text-decoration: none;
-
   left: 706px;
   top: 13px;
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
@@ -99,6 +144,11 @@ const CheckboxesWrap = styled.div`
   margin: 0 auto;
   grid-template-columns: repeat(5, 30px 140px);
   justify-items: start;
+  @media screen and (max-width: 700px) {
+    grid-template-columns: repeat(2, 30px 140px);
+    max-width: 100%;
+    font-size: 0.8rem;
+  } ;
 `;
 
 const Label = styled.label``;
@@ -106,6 +156,9 @@ const Label = styled.label``;
 const SubHeading = styled.h5`
   align-self: flex-start;
   padding: 10px 0px 10px 0px;
+  @media screen and (max-width: 700px) {
+    padding-left: 10px;
+  } ;
 `;
 
 const Button = styled.button`
@@ -125,31 +178,29 @@ const Button = styled.button`
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
     1px 1px 0 #000;
   box-shadow: 0 8px 16px rgb(38 38 48 / 20%);
-`;
-
-const FileUpload = styled.input`
-  // border: 1px solid red;
-  text-align: center;
-  margin: 0 auto;
+  @media screen and (max-width: 700px) {
+    font-size: 1.3rem;
+    width: 200px;
+  } ;
 `;
 
 const SignUp = ({ geolocation }) => {
-  console.log(geolocation.longitude, geolocation.latitude);
   const initialState = {
     fields: {
-      firstName: "",
-      lastName: "",
-      age: "",
-      email: "",
-      confirmEmail: "",
-      password: "",
-      confirmPassword: "",
-      aboutMe: "",
+      firstName: '',
+      lastName: '',
+      age: '',
+      email: '',
+      confirmEmail: '',
+      password: '',
+      confirmPassword: '',
+      aboutMe: '',
     },
     interestsSelectors: interests.map((interest) => {
       return { value: interest, isChecked: false };
     }),
     selectedFile: null,
+    imagePreview: '',
   };
 
   const [fields, setFields] = useState(initialState.fields);
@@ -157,11 +208,16 @@ const SignUp = ({ geolocation }) => {
     initialState.interestsSelectors
   );
   const [selectedFile, setSelectedFile] = useState(initialState.selectedFile);
+  const [imagePreview, setImagePreview] = useState(initialState.imagePreview);
 
-  const hash = geofire.geohashForLocation([
-    geolocation.latitude,
-    geolocation.longitude,
-  ]);
+  // tempporary fix to handle lack of location data
+  let hash;
+  if (geolocation) {
+    hash = geofire.geohashForLocation([
+      geolocation.latitude,
+      geolocation.longitude,
+    ]);
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -180,7 +236,7 @@ const SignUp = ({ geolocation }) => {
       const userPicRef = storageRef.child(`${uid}-image.jpg`);
       await userPicRef.put(selectedFile);
       const imageURL = await userPicRef.getDownloadURL();
-      await firebase.firestore().collection("users").doc(uid).set({
+      await firebase.firestore().collection('users').doc(uid).set({
         firstName: fields.firstName,
         lastName: fields.lastName,
         age: fields.age,
@@ -191,9 +247,9 @@ const SignUp = ({ geolocation }) => {
         latitude: geolocation.latitude,
         longitude: geolocation.longitude,
       });
-      alert("Profile successfully created.");
+      alert('Profile successfully created.');
     } catch (error) {
-      alert("Sorry, something went wrong. Please try again.");
+      alert('Sorry, something went wrong. Please try again.');
 
       console.log(error);
     }
@@ -220,6 +276,7 @@ const SignUp = ({ geolocation }) => {
   };
 
   const fileSelectedHandler = (event) => {
+    setImagePreview(URL.createObjectURL(event.target.files[0]));
     setSelectedFile(event.target.files[0]);
   };
 
@@ -244,16 +301,16 @@ const SignUp = ({ geolocation }) => {
       </Banner>
       <MainContainer>
         <UploadImageContainer>
-          <ProfileImg
-            src="../images/profileplaceholder.png"
-            alt="profile-picture"
-          />
-          <FileUpload
-            type="file"
-            accept="image/png, image/jpeg"
-            onChange={fileSelectedHandler}
-          />
-          <Button>Upload Image</Button>
+          <ProfileImg src={imagePreview} />
+          <CustomFileUpload>
+            Choose image
+            <input
+              style={{ display: 'none' }}
+              type="file"
+              accept="image/png, image/jpeg"
+              onChange={fileSelectedHandler}
+            />
+          </CustomFileUpload>
         </UploadImageContainer>
 
         <FormContainer>
@@ -344,7 +401,7 @@ const SignUp = ({ geolocation }) => {
       <SubHeading>About Me</SubHeading>
       <Input
         name="aboutMe"
-        style={{ width: "100%", height: "100%", marginBottom: "30px" }}
+        style={{ width: '100%', height: '100%', marginBottom: '30px' }}
         type="textarea"
         placeholder="Introduce yourself!"
         value={fields.aboutMe}
