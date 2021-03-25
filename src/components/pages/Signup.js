@@ -184,7 +184,7 @@ const Button = styled.button`
   } ;
 `;
 
-const SignUp = ({ geolocation, handleLogin }) => {
+const SignUp = ({ geolocation, logIn }) => {
   const initialState = {
     fields: {
       firstName: "",
@@ -248,7 +248,7 @@ const SignUp = ({ geolocation, handleLogin }) => {
         longitude: geolocation.longitude,
       });
       alert("Profile successfully created.");
-      onclick = { handleLogin };
+      onclick = { logIn };
       window.location.href = "/Home";
     } catch (error) {
       alert("Sorry, something went wrong. Please try again.");

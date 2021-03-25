@@ -23,11 +23,14 @@ function App() {
       .signInWithEmailAndPassword(email, password)
       .then((user) => console.log(user))
       .catch((error) => console.log(error));
-    setIsLoggedIn(true);
+  };
+  const logIn = () => {
+     setIsLoggedIn (true)
   };
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
+      console.log(position.coords.latitude)
       setGeolocation({
         latitude: position.coords.latitude,
         longitude: position.coords.longitude,
@@ -45,7 +48,7 @@ function App() {
             <Login handleLogin={handleLogin} />
           </Route>
           <Route exact path="/Signup">
-            <Signup geolocation={geolocation} handleLogin={handleLogin} />
+            <Signup geolocation={geolocation} logIn={logIn} />
           </Route>
         </Switch>
       )}
