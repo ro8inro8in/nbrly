@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import "../App.css";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch,Redirect } from "react-router-dom";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Main from "./pages/Main";
@@ -21,16 +21,19 @@ function App() {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then((user) => console.log(user))
+      .then(() => {
+        setIsLoggedIn(true);
+        return <Redirect to="/home" />;
+      })
       .catch((error) => console.log(error));
   };
   const logIn = () => {
-     setIsLoggedIn (true)
+    setIsLoggedIn(true);
   };
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
-      console.log(position.coords.latitude)
+      console.log(position.coords.latitude);
       setGeolocation({
         latitude: position.coords.latitude,
         longitude: position.coords.longitude,
@@ -40,18 +43,18 @@ function App() {
 
   return (
     <div className="App">
-      {isLoggedIn ? (
-        <Main handleLogout={handleLogout} />
-      ) : (
-        <Switch>
-          <Route exact path="/">
-            <Login handleLogin={handleLogin} />
-          </Route>
-          <Route exact path="/Signup">
-            <Signup geolocation={geolocation} logIn={logIn} />
-          </Route>
-        </Switch>
-      )}
+      <Switch>
+        <Route exact path="/">
+          <Login handleLogin={handleLogin} />
+        </Route>
+        <Route exact path="/Signup">
+          <Signup geolocation={geolocation} logIn={logIn} />
+        </Route>
+        <Route exact path="/Main">
+          <Main />
+        </Route>
+      </Switch>
+
       <Footer />
     </div>
   );
