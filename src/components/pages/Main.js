@@ -3,6 +3,7 @@ import NavBar from '../NavBar';
 import SideBar from '../SideBar';
 import Home from './Home';
 import Profile from './Profile';
+import Login from './Login';
 import { Route, Switch } from 'react-router-dom';
 
 const Main = ({ handleLogout }) => {
@@ -23,7 +24,10 @@ const Main = ({ handleLogout }) => {
         </Route>
         <Route exact path="/Profile">
           <Profile />
-        </Route>
+        </Route>   
+        <Route exact path="/">
+          <Login />
+        </Route>  
       </Switch>
     </>
   );

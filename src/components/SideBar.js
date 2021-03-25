@@ -16,7 +16,6 @@ const SidebarContainer = styled.aside`
   transition: 0.3s ease-in-out;
   opacity: ${({ isOpen }) => (isOpen ? "100%" : "0")};
   top: ${({ isOpen }) => (isOpen ? "0" : "-100%")};
-
 `;
 const CloseIcon = styled(FaTimes)`
   color: white;
@@ -64,7 +63,7 @@ const SidebarLink = styled(Link)`
         transition: 0.2s ease-in-out;
     }
 `;
-const SideBar = ({ isOpen, toggle }) => {
+const SideBar = ({ isOpen, toggle, handleLogout }) => {
   return (
     <>
       <SidebarContainer isOpen={isOpen} onClick={toggle}>
@@ -72,13 +71,17 @@ const SideBar = ({ isOpen, toggle }) => {
           <CloseIcon />
         </Icon>
         <SidebarWrapper>
-        <SidebarMenu>
+          <SidebarMenu>
             <SidebarLink to="/Home">Home</SidebarLink>
           </SidebarMenu>
           <SidebarMenu>
             <SidebarLink to="/Profile">Profile</SidebarLink>
           </SidebarMenu>
-    
+          <SidebarMenu>
+            <SidebarLink onClick={handleLogout} to="/">
+              Logout
+            </SidebarLink>
+          </SidebarMenu>
         </SidebarWrapper>
       </SidebarContainer>
     </>

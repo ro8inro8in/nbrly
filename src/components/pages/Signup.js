@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Form, FormGroup, Input } from "reactstrap";
+import { FormGroup, Input } from "reactstrap";
 // import { Link } from "react-router-dom";
 import "firebase/auth";
 import CheckBox from "../CheckBox";

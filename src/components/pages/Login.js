@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Form, FormGroup, Label, Input } from "reactstrap";
+import { FormGroup, Label, Input } from "reactstrap";
 import { Link } from "react-router-dom";
 
 const FormContainer = styled.div`
@@ -36,9 +36,6 @@ const Banner = styled.div`
 const BottomContainer = styled.div`
   display: flex;
   justify-content: space-evenly;
-
-
-  }
 `;
 
 const ImgIcon = styled.img`
