@@ -10,12 +10,17 @@ const FormContainer = styled.div`
 const TopContainer = styled.div`
   padding: 7em;
   @media (max-width: 768px) {
-    padding: 5em;
+    padding: 4em;
   }
 `;
 
 const FormWrapper = styled.div`
   width: 40%;
+
+  @media (max-width: 768px) {
+    padding-top: 4em;
+    padding-bottom: 4em;
+  }
 `;
 
 const Header = styled.div`
@@ -36,6 +41,11 @@ const Banner = styled.div`
 const BottomContainer = styled.div`
   display: flex;
   justify-content: space-evenly;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const ImgIcon = styled.img`
@@ -88,6 +98,11 @@ const LogInButton = styled.button`
 
 const LoginText = styled.div`
   text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  @media (max-width: 768px) {
+    font-size: 1.5em;
+  }
 `;
 
 const LoginPage = () => {
@@ -99,10 +114,8 @@ const LoginPage = () => {
           <Header>NBRLY</Header>
         </Banner>
         <LoginText>
-          <h2>
-            Connect with like-minded people in your vicinity for sports,
-            nightlife, and everything in between
-          </h2>
+          Connect with like-minded people in your vicinity for sports,
+          nightlife, and everything in between
         </LoginText>
       </TopContainer>
       <BottomContainer>
