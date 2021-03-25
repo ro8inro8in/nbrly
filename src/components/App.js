@@ -5,9 +5,11 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Main from "./pages/Main";
 import Footer from "./Footer";
+import "firebase/auth";
+import { firebase, db } from "../index";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [geolocation, setGeolocation] = useState();
 
   const handleLogout = () => {
@@ -15,7 +17,12 @@ function App() {
   };
 
   // does this belong here?
-  const handleLogin = () => {
+  const handleLogin = (email, password) => {
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then((user) => console.log(user))
+      .catch((error) => console.log(error));
     setIsLoggedIn(true);
   };
 

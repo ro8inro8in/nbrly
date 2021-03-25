@@ -321,7 +321,7 @@ const SignUp = ({ geolocation, handleLogin }) => {
             <Input
               id="firstname"
               name="firstName"
-              type="firstName"
+              type="text"
               placeholder="What should people call you?"
               value={fields.firstName}
               onChange={handleFieldChange}

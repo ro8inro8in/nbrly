@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { FormGroup, Label, Input } from "reactstrap";
 import { Link } from "react-router-dom";
@@ -105,7 +105,16 @@ const LoginText = styled.div`
   }
 `;
 
-const LoginPage = () => {
+const LoginPage = ({ handleLogin }) => {
+  const [fields, setFields] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleFieldChange = (event) => {
+    setFields({ ...fields, [event.target.name]: event.target.value });
+  };
+
   return (
     <FormContainer>
       <TopContainer>
@@ -127,14 +136,33 @@ const LoginPage = () => {
         <FormWrapper>
           <FormGroup>
             <Label>Email</Label>
-            <Input type="email" placeholder="Email"></Input>
+            <Input
+              type="email"
+              placeholder="Email"
+              id="email"
+              name="email"
+              value={fields.email}
+              onChange={handleFieldChange}
+            ></Input>
           </FormGroup>
           <FormGroup>
             <Label>Password</Label>
-            <Input type="password" placeholder="Password"></Input>
+            <Input
+              id="password"
+              placeholder="Password"
+              name="password"
+              type="password"
+              value={fields.password}
+              onChange={handleFieldChange}
+            ></Input>
           </FormGroup>
 
-          <LogInButton className="btn-sml btn-block">Log in</LogInButton>
+          <LogInButton
+            className="btn-sml btn-block"
+            onClick={() => handleLogin(fields.email, fields.password)}
+          >
+            Log in
+          </LogInButton>
         </FormWrapper>
       </BottomContainer>
     </FormContainer>
