@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState } from 'react';
-
 import 'firebase/auth';
 import interests from '../../lib/interests';
 import { FormGroup, Input } from 'reactstrap';
@@ -24,7 +23,7 @@ import {
   Button,
 } from '../../styles/SignUpStyles.js';
 
-import { createUser } from './helpers/databaseRequests.js';
+import { createUser } from './databaseRequests.js';
 
 const geofire = require('geofire-common');
 
@@ -309,8 +308,6 @@ const SignUp = ({ geolocation, logIn }) => {
         onChange={handleFieldChange}
       ></TextArea>
       <Button type="submit">Create Profile</Button>
-
-      {/* <Link to="/Signup"> */}
     </LoginForm>
   );
 };

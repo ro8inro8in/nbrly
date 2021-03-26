@@ -1,6 +1,11 @@
 import { firebase } from '../../index';
 
-const createUser = async (profileData, selectedFile, email, password) => {
+export const createUser = async (
+  profileData,
+  selectedFile,
+  email,
+  password
+) => {
   try {
     const userCredential = await firebase
       .auth()
@@ -23,5 +28,3 @@ const createUser = async (profileData, selectedFile, email, password) => {
     console.log(error);
   }
 };
-
-export { createUser };
