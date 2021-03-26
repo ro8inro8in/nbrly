@@ -32,6 +32,7 @@ const interests = [
   'gong baths',
   'yoga',
   'cooking',
+  'live music'
 ];
 
 export default interests;

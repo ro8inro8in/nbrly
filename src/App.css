@@ -1,13 +1,12 @@
-
-*{
+* {
   margin: 0;
   padding: 0;
-  
 }
 
 .App {
   background-color: #f8f8ff;
   min-height: 100vh;
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
+  align-items: center;
 }

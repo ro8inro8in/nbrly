@@ -8,6 +8,7 @@ const Label = styled.label`
 const Input = styled.input`
   margin: 5px;
   justify-self: start;
+  align-self: center;
 `;
 
 const CheckBox = ({ name, defaultChecked = false, onChange }) => {

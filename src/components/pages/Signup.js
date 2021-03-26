@@ -1,206 +1,63 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { FormGroup, Input } from "reactstrap";
-// import { Link } from "react-router-dom";
-import "firebase/auth";
-import CheckBox from "../CheckBox";
-import { firebase, db } from "../../index";
-import interests from "../../lib/interests";
-const geofire = require("geofire-common");
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState } from 'react';
 
-const LoginForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 30px;
-  width: 100%;
-  height: 100%;
-  @media screen and (max-width: 700px) {
-    padding: 3px;
-  } ;
-`;
+import 'firebase/auth';
+import interests from '../../lib/interests';
+import { FormGroup, Input } from 'reactstrap';
+import CheckBox from '../CheckBox';
+import ErrorMessage from '../ErrorMessage';
+import {
+  LoginForm,
+  Banner,
+  ImgIcon,
+  MainContainer,
+  UploadImageContainer,
+  ProfileImg,
+  CustomFileUpload,
+  FormContainer,
+  Header,
+  InterestsWrap,
+  CheckboxesWrap,
+  Label,
+  Subheading,
+  TextArea,
+  Button,
+} from '../../styles/SignUpStyles.js';
 
-const Banner = styled.div`
-  display: flex;
-  width: 50%;
-  justify-content: center;
-  @media screen and (max-width: 700px) {
-    height: 85px;
-  } ;
-`;
+import { createUser } from './helpers/databaseRequests.js';
 
-const ImgIcon = styled.img`
-  display: flex;
-  width: 91px;
-  height: 91px;
-  top: 0px;
-  @media screen and (max-width: 960px) {
-    left: 300px;
-  }
-  @media screen and (max-width: 460px) {
-    left: 160px;
-  }
-`;
-
-const MainContainer = styled.div`
-  display: flex;
-  flex-direction: row-reverse;
-  width: 100%;
-  margin-top: 40px;
-  @media screen and (max-width: 700px) {
-    flex-direction: column;
-    align-items: center;
-  } ;
-`;
-
-const UploadImageContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 50%;
-  padding: 20px;
-  margin-left: 5rem;
-  @media screen and (max-width: 700px) {
-    width: 100%;
-    margin: 0;
-    padding: 5px;
-    margin-bottom: 15px;
-  } ;
-`;
-
-const ProfileImg = styled.img`
-  width: 360px;
-  height: 360px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 30px;
-  border: 5px solid white;
-  @media screen and (max-width: 700px) {
-    width: 180px;
-    height: 180px;
-    margin-bottom: 10px;
-  } ;
-`;
-
-const CustomFileUpload = styled.label`
-  width: 230px;
-  height: 52px;
-  color: white;
-  font-size: 1.5rem;
-  font-weight: bold;
-  background: #ffb800;
-  border: 0.5px solid #000000;
-  border-radius: 5px;
-  padding: 3px 0;
-  cursor: pointer;
-  text-align: center;
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
-    1px 1px 0 #000;
-  box-shadow: 0 8px 16px rgb(38 38 48 / 20%);
-  @media screen and (max-width: 700px) {
-    font-size: 1.3rem;
-    width: 180px;
-    height: 40px;
-  } ;
-`;
-
-const FormContainer = styled.div`
-  width: 50%;
-  @media screen and (max-width: 700px) {
-    width: 90%;
-  } ;
-`;
-
-const Header = styled.div`
-  color: white;
-  font-size: 2.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  font-weight: bold;
-  text-decoration: none;
-  left: 706px;
-  top: 13px;
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
-    1px 1px 0 #000;
-`;
-
-const InterestsDiv = styled.div`
-  width: 100%;
-  background: white;
-  border: 1px solid #ced4da;
-  border-radius: 5px;
-  padding: 10px;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-`;
-
-const CheckboxesWrap = styled.div`
-  display: grid;
-  width: calc((30px + 140px) *5)
-  margin: 0 auto;
-  grid-template-columns: repeat(5, 30px 140px);
-  justify-items: start;
-  @media screen and (max-width: 700px) {
-    grid-template-columns: repeat(2, 30px 140px);
-    max-width: 100%;
-    font-size: 0.8rem;
-  } ;
-`;
-
-const Label = styled.label``;
-
-const SubHeading = styled.h5`
-  align-self: flex-start;
-  padding: 10px 0px 10px 0px;
-  @media screen and (max-width: 700px) {
-    padding-left: 10px;
-  } ;
-`;
-
-const Button = styled.button`
-  color: white;
-  font-size: 1.5rem;
-  font-weight: bold;
-  width: 100%;
-  max-width: 330px;
-  margin-top: 20px;
-  margin-bottom: 50px;
-  height: 54px;
-  background: #ffb800;
-  border: 0.5px solid #000000;
-  border-radius: 5px;
-  cursor: pointer;
-  text-align: center;
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
-    1px 1px 0 #000;
-  box-shadow: 0 8px 16px rgb(38 38 48 / 20%);
-  @media screen and (max-width: 700px) {
-    font-size: 1.3rem;
-    width: 200px;
-  } ;
-`;
+const geofire = require('geofire-common');
 
 const SignUp = ({ geolocation, logIn }) => {
   const initialState = {
     fields: {
-      firstName: "",
-      lastName: "",
-      age: "",
-      email: "",
-      confirmEmail: "",
-      password: "",
-      confirmPassword: "",
-      aboutMe: "",
+      firstName: '',
+      lastName: '',
+      age: '',
+      email: '',
+      confirmEmail: '',
+      password: '',
+      confirmPassword: '',
+      aboutMe: '',
     },
     interestsSelectors: interests.map((interest) => {
       return { value: interest, isChecked: false };
     }),
     selectedFile: null,
-    imagePreview: "",
+    imagePreview: '../images/profileplaceholder.png',
+    errors: {
+      firstName: false,
+      lastName: false,
+      age: false,
+      email: false,
+      confirmEmail: false,
+      password: false,
+      confirmPassword: false,
+      aboutMe: false,
+      interests: false,
+      emailsMismatch: false,
+      passwordsMismatch: false,
+    },
   };
 
   const [fields, setFields] = useState(initialState.fields);
@@ -209,7 +66,13 @@ const SignUp = ({ geolocation, logIn }) => {
   );
   const [selectedFile, setSelectedFile] = useState(initialState.selectedFile);
   const [imagePreview, setImagePreview] = useState(initialState.imagePreview);
-
+  const [errors, setErrors] = useState(initialState.errors);
+  const errorMessages = {
+    blank: 'Field cannot be blank',
+    checkboxes: 'Please tick at least one',
+    emailMatch: `Emails don't match`,
+    passwordMatch: `Passwords don't match`,
+  };
   // tempporary fix to handle lack of location data
   let hash;
   if (geolocation) {
@@ -219,41 +82,51 @@ const SignUp = ({ geolocation, logIn }) => {
     ]);
   }
 
+  const validateForm = (userInterests) => {
+    let isFormValid = true;
+    const values = {
+      interests: userInterests.length ? false : true,
+      emailsMismatch: fields.email !== fields.confirmEmail,
+      passwordsMismatch: fields.password !== fields.confirmPassword,
+    };
+
+    for (const field in fields) {
+      if (!fields[field]) {
+        values[field] = true;
+      }
+    }
+
+    for (const value in values) {
+      if (values[value]) {
+        isFormValid = false;
+      }
+    }
+    setErrors((errors) => ({ ...errors, ...values }));
+    return isFormValid;
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setErrors(initialState.errors);
     const userInterests = [];
     interestsSelectors.forEach((interest) => {
       if (interest.isChecked) {
         userInterests.push(interest.value);
       }
     });
-    try {
-      const userCredential = await firebase
-        .auth()
-        .createUserWithEmailAndPassword(fields.email, fields.password);
-      const uid = userCredential.user.uid;
-      const storageRef = firebase.storage().ref();
-      const userPicRef = storageRef.child(`${uid}-image.jpg`);
-      await userPicRef.put(selectedFile);
-      const imageURL = await userPicRef.getDownloadURL();
-      await firebase.firestore().collection("users").doc(uid).set({
+    const valid = validateForm(userInterests);
+    if (valid) {
+      const profileData = {
         firstName: fields.firstName,
         lastName: fields.lastName,
         age: fields.age,
         aboutMe: fields.aboutMe,
         interests: userInterests,
-        profileImage: imageURL,
         geohash: hash,
         latitude: geolocation.latitude,
         longitude: geolocation.longitude,
-      });
-      alert("Profile successfully created.");
-      onclick = { logIn };
-      window.location.href = "/Home";
-    } catch (error) {
-      alert("Sorry, something went wrong. Please try again.");
-
-      console.log(error);
+      };
+      createUser(profileData, selectedFile, fields.email, fields.password);
     }
   };
 
@@ -263,7 +136,7 @@ const SignUp = ({ geolocation, logIn }) => {
 
   const handleBoxChange = (event) => {
     const { name, defaultChecked } = event.target;
-    console.log(interestsSelectors);
+
     if (defaultChecked) {
       setInterestsSelectors((items) => {
         items.find((item) => item.value === name).isChecked = false;
@@ -282,21 +155,8 @@ const SignUp = ({ geolocation, logIn }) => {
     setSelectedFile(event.target.files[0]);
   };
 
-  const checkboxes = interests.map((interest) => {
-    return (
-      <CheckBox
-        key={interest}
-        name={interest}
-        onChange={handleBoxChange}
-        defaultChecked={
-          interestsSelectors.find((item) => item.value === interest).isChecked
-        }
-      />
-    );
-  });
-
   return (
-    <LoginForm>
+    <LoginForm onSubmit={handleSubmit}>
       <Banner>
         <ImgIcon src="../images/Mess3.png" alt="navbar-logo" />
         <Header>NBRLY</Header>
@@ -307,7 +167,7 @@ const SignUp = ({ geolocation, logIn }) => {
           <CustomFileUpload>
             Choose image
             <input
-              style={{ display: "none" }}
+              style={{ display: 'none' }}
               type="file"
               accept="image/png, image/jpeg"
               onChange={fileSelectedHandler}
@@ -318,6 +178,7 @@ const SignUp = ({ geolocation, logIn }) => {
         <FormContainer>
           <FormGroup>
             <Label htmlFor="firstname">First Name</Label>
+            {errors.firstName && <ErrorMessage message={errorMessages.blank} />}
             <Input
               id="firstname"
               name="firstName"
@@ -329,6 +190,7 @@ const SignUp = ({ geolocation, logIn }) => {
           </FormGroup>
           <FormGroup>
             <Label htmlFor="lastname">Last Name</Label>
+            {errors.lastName && <ErrorMessage message={errorMessages.blank} />}
             <Input
               id="lastname"
               name="lastName"
@@ -339,6 +201,7 @@ const SignUp = ({ geolocation, logIn }) => {
           </FormGroup>
           <FormGroup>
             <Label htmlFor="age">Age</Label>
+            {errors.age && <ErrorMessage message={errorMessages.blank} />}
             <Input
               id="age"
               name="age"
@@ -350,6 +213,7 @@ const SignUp = ({ geolocation, logIn }) => {
 
           <FormGroup>
             <Label htmlFor="email">Email</Label>
+            {errors.email && <ErrorMessage message={errorMessages.blank} />}
             <Input
               id="email"
               name="email"
@@ -361,6 +225,12 @@ const SignUp = ({ geolocation, logIn }) => {
           </FormGroup>
           <FormGroup>
             <Label htmlFor="confirm-email">Confirm Email</Label>
+            {errors.confirmEmail && (
+              <ErrorMessage message={errorMessages.blank} />
+            )}
+            {errors.emailsMismatch && (
+              <ErrorMessage message={errorMessages.emailMatch} />
+            )}
             <Input
               id="confirm-email"
               name="confirmEmail"
@@ -372,6 +242,7 @@ const SignUp = ({ geolocation, logIn }) => {
           </FormGroup>
           <FormGroup>
             <Label htmlFor="password">Password</Label>
+            {errors.password && <ErrorMessage message={errorMessages.blank} />}
             <Input
               id="password"
               name="password"
@@ -383,6 +254,12 @@ const SignUp = ({ geolocation, logIn }) => {
           </FormGroup>
           <FormGroup>
             <Label htmlFor="confirm-password">Confirm Password</Label>
+            {errors.confirmPassword && (
+              <ErrorMessage message={errorMessages.blank} />
+            )}
+            {errors.passwordsMismatch && (
+              <ErrorMessage message={errorMessages.passwordMatch} />
+            )}
             <Input
               id="confirm-password"
               name="confirmPassword"
@@ -395,21 +272,43 @@ const SignUp = ({ geolocation, logIn }) => {
         </FormContainer>
       </MainContainer>
 
-      <SubHeading>Interests</SubHeading>
-      <InterestsDiv>
-        <CheckboxesWrap>{checkboxes}</CheckboxesWrap>
-      </InterestsDiv>
+      <Subheading>
+        Interests
+        {errors.interests && (
+          <ErrorMessage message={errorMessages.checkboxes} />
+        )}
+      </Subheading>
 
-      <SubHeading>About Me</SubHeading>
-      <Input
+      <InterestsWrap>
+        <CheckboxesWrap>
+          {interests.map((interest) => {
+            return (
+              <CheckBox
+                key={interest}
+                name={interest}
+                onChange={handleBoxChange}
+                defaultChecked={
+                  interestsSelectors.find((item) => item.value === interest)
+                    .isChecked
+                }
+              />
+            );
+          })}
+        </CheckboxesWrap>
+      </InterestsWrap>
+
+      <Subheading>
+        About Me
+        {errors.aboutMe && <ErrorMessage message={errorMessages.blank} />}
+      </Subheading>
+
+      <TextArea
         name="aboutMe"
-        style={{ width: "100%", height: "100%", marginBottom: "30px" }}
-        type="textarea"
         placeholder="Introduce yourself!"
         value={fields.aboutMe}
         onChange={handleFieldChange}
-      ></Input>
-      <Button onClick={handleSubmit}>Create Profile</Button>
+      ></TextArea>
+      <Button type="submit">Create Profile</Button>
 
       {/* <Link to="/Signup"> */}
     </LoginForm>
