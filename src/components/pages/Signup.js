@@ -23,7 +23,7 @@ import {
   Button,
 } from '../../styles/SignUpStyles.js';
 
-import { createUser } from './databaseRequests.js';
+import { createUser } from '../../helpers/databaseRequests.js';
 
 const geofire = require('geofire-common');
 
@@ -72,7 +72,8 @@ const SignUp = ({ geolocation, logIn }) => {
     emailMatch: `Emails don't match`,
     passwordMatch: `Passwords don't match`,
   };
-  // tempporary fix to handle lack of location data
+  
+  // ? tempporary fix to handle lack of location data
   let hash;
   if (geolocation) {
     hash = geofire.geohashForLocation([
