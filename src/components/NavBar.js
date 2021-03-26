@@ -2,9 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { FaBars } from "react-icons/fa";
+// import withAuth from "./withAuth";
+import { withRouter } from "react-router";
 
 const Nav = styled.nav`
 background: #CFCFCF;
+width: 100%;
 height: 50px:
 margin-top -80px;
 display: flex;
@@ -117,7 +120,7 @@ const Navbar = ({ toggle, handleLogout }) => {
             <NavLinks to="/Profile">My Profile</NavLinks>
           </NavItem>
           <NavItem>
-            <NavLinks onClick={handleLogout} to="/">
+            <NavLinks onClick={handleLogout}>
               Logout
             </NavLinks>
           </NavItem>
@@ -126,4 +129,4 @@ const Navbar = ({ toggle, handleLogout }) => {
     </>
   );
 };
-export default Navbar;
+export default withRouter(Navbar);

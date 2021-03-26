@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import ActivitySelect from "../ActivitySelect";
 import Results from "../Results";
+import withAuth from "../withAuth";
 
 const TitleHomeWrap = styled.div`
 
@@ -29,4 +30,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default withAuth(Home);

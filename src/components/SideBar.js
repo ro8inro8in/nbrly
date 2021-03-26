@@ -78,7 +78,7 @@ const SideBar = ({ isOpen, toggle, handleLogout }) => {
             <SidebarLink to="/Profile">Profile</SidebarLink>
           </SidebarMenu>
           <SidebarMenu>
-            <SidebarLink onClick={handleLogout} to="/">
+            <SidebarLink onClick={handleLogout}>
               Logout
             </SidebarLink>
           </SidebarMenu>

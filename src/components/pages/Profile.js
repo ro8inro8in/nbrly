@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import withAuth from "../withAuth";
 
 const UserImg = styled.img`
   width: 15em;
@@ -61,4 +62,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default withAuth(Profile);
