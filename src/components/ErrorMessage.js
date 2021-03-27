@@ -3,7 +3,6 @@ import styled from 'styled-components';
 const StyledErrorMessage = styled.p`
   color: red;
   font-size: 0.8rem;
-  // display: inline;
   margin: 0 0 0 2px;
   justify-self: flex-start;
   font-weight: 300;

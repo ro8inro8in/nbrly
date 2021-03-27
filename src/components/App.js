@@ -1,23 +1,21 @@
-import { useState, useEffect } from "react";
-import "../App.css";
-import { Route, Switch, Redirect } from "react-router-dom";
-import { withRouter } from "react-router";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import Footer from "./Footer";
-import Home from "./pages/Home";
-import Profile from "./pages/Profile";
-import NavBar from "./NavBar";
-import SideBar from "./SideBar";
-import "firebase/auth";
-import { firebase, db } from "../index";
-
+import { useState, useEffect } from 'react';
+import '../App.css';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import Footer from './Footer';
+import Home from './pages/Home';
+import Profile from './pages/Profile';
+import NavBar from './NavBar';
+import SideBar from './SideBar';
+import 'firebase/auth';
+import { firebaseApp, db } from '../Firebase.js';
 
 const App = ({ history }) => {
   // const [isLoggedIn, setIsLoggedIn] = useState();
   const [geolocation, setGeolocation] = useState();
   const [isOpen, setIsOpen] = useState(false);
-
 
   const toggle = () => {
     setIsOpen(!isOpen);
@@ -25,15 +23,12 @@ const App = ({ history }) => {
 
   // does this belong here?
   const handleLogin = (email, password) => {
-    firebase
+    firebaseApp
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(() => {
-       localStorage.setItem("token", "some-login-token");
-       
-        history.push("/Home");
-
-       
+        localStorage.setItem('token', 'some-login-token');
+        history.push('/Home');
       })
       .catch((error) => console.log(error));
   };
@@ -41,9 +36,9 @@ const App = ({ history }) => {
   //   setIsLoggedIn(true);
   // };
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    console.log(localStorage.getItem("token"));
-    history.push("/");
+    localStorage.removeItem('token');
+    console.log(localStorage.getItem('token'));
+    history.push('/');
   };
 
   useEffect(() => {

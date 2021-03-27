@@ -1,4 +1,4 @@
-import { firebase } from '../index';
+import { firebaseApp, firebase } from '../Firebase';
 
 export const createUser = async (
   profileData,
@@ -7,7 +7,7 @@ export const createUser = async (
   password
 ) => {
   try {
-    const userCredential = await firebase
+    const userCredential = await firebaseApp
       .auth()
       .createUserWithEmailAndPassword(email, password);
     const uid = userCredential.user.uid;
@@ -15,7 +15,7 @@ export const createUser = async (
     const userPicRef = storageRef.child(`${uid}-image.jpg`);
     await userPicRef.put(selectedFile);
     const imageURL = await userPicRef.getDownloadURL();
-    await firebase
+    await firebaseApp
       .firestore()
       .collection('users')
       .doc(uid)

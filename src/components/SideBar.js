@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
-import { FaTimes } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import React from 'react';
+import styled from 'styled-components';
+import { FaTimes } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const SidebarContainer = styled.aside`
   position: fixed;
@@ -14,8 +14,8 @@ const SidebarContainer = styled.aside`
   top: 0;
   right: 0;
   transition: 0.3s ease-in-out;
-  opacity: ${({ isOpen }) => (isOpen ? "100%" : "0")};
-  top: ${({ isOpen }) => (isOpen ? "0" : "-100%")};
+  opacity: ${({ isOpen }) => (isOpen ? '100%' : '0')};
+  top: ${({ isOpen }) => (isOpen ? '0' : '-100%')};
 `;
 const CloseIcon = styled(FaTimes)`
   color: white;
@@ -79,6 +79,7 @@ const SideBar = ({ isOpen, toggle, handleLogout }) => {
           </SidebarMenu>
           <SidebarMenu>
             <SidebarLink onClick={handleLogout}>
+              {/*change from router Link to normal to remove error "failed prop type" */}
               Logout
             </SidebarLink>
           </SidebarMenu>
