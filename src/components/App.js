@@ -21,23 +21,20 @@ const App = ({ history }) => {
     setIsOpen(!isOpen);
   };
 
-  // does this belong here?
   const handleLogin = (email, password) => {
     firebaseApp
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then(() => {
-        localStorage.setItem('token', 'some-login-token');
+      .then((userCred) => {
+        localStorage.setItem('token', userCred.user.refreshToken);
         history.push('/Home');
       })
       .catch((error) => console.log(error));
   };
-  // const logIn = () => {
-  //   setIsLoggedIn(true);
-  // };
+
   const handleLogout = () => {
-    localStorage.removeItem('token');
     console.log(localStorage.getItem('token'));
+    localStorage.removeItem('token');
     history.push('/');
   };
 
