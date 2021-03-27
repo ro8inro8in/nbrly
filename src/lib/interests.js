@@ -35,4 +35,7 @@ const interests = [
   'live music'
 ];
 
+// module.exports = {
+//   interests
+// }
 export default interests;

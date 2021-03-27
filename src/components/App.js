@@ -12,10 +12,12 @@ import SideBar from "./SideBar";
 import "firebase/auth";
 import { firebase, db } from "../index";
 
+
 const App = ({ history }) => {
   // const [isLoggedIn, setIsLoggedIn] = useState();
   const [geolocation, setGeolocation] = useState();
   const [isOpen, setIsOpen] = useState(false);
+
 
   const toggle = () => {
     setIsOpen(!isOpen);
