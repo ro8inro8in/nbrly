@@ -1,5 +1,7 @@
-const firebase = require ('firebase/app');
 require ('firebase/firestore');
+const firebase = require ('firebase/app');
+const admin = require('firebase-admin');
+
 
 const firebaseConfig = {
     apiKey: 'AIzaSyCCRhi9kXg1EzRPtLjJJa0rGcwisL0sXA0',
@@ -16,5 +18,5 @@ const firebaseConfig = {
   const db = firebaseApp.firestore()
 
   module.exports = {
-    firebase, firebaseApp, db
+    firebase, firebaseApp, db, admin
   }
