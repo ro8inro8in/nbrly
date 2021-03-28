@@ -1,22 +1,26 @@
-require ('firebase/firestore');
-const firebase = require ('firebase/app');
-const admin = require('firebase-admin');
-
+require('firebase/firestore');
+require('firebase/storage');
+const firebase = require('firebase/app');
 
 const firebaseConfig = {
-    apiKey: 'AIzaSyCCRhi9kXg1EzRPtLjJJa0rGcwisL0sXA0',
-    authDomain: 'nbrly-e50b3.firebaseapp.com',
-    projectId: 'nbrly-e50b3',
-    storageBucket: 'nbrly-e50b3.appspot.com',
-    messagingSenderId: '282284575217',
-    appId: '1:282284575217:web:8e7aa9d60bb05e5bb8dc50',
-    measurementId: 'G-C313EYFCQC',
-  };
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
+};
 
-  const firebaseApp = firebase.default.initializeApp(firebaseConfig);
+const firebaseApp = firebase.default.initializeApp(firebaseConfig);
 
-  const db = firebaseApp.firestore()
+const db = firebaseApp.firestore();
 
-  module.exports = {
-    firebase, firebaseApp, db, admin
-  }
+const storage = firebaseApp.storage();
+
+module.exports = {
+  firebase,
+  firebaseApp,
+  db,
+  storage,
+};

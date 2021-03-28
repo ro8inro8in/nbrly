@@ -63,6 +63,25 @@ const SidebarLink = styled(Link)`
         transition: 0.2s ease-in-out;
     }
 `;
+
+const LogoutLink = styled.a`    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    text-decoration: none;
+    list-style: none;
+    transition: 0.2s ease-in-out;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer
+
+    &:hover{
+        color: #CFCFCF;
+        transition: 0.2s ease-in-out;
+    }`;
+
 const SideBar = ({ isOpen, toggle, handleLogout }) => {
   return (
     <>
@@ -78,10 +97,7 @@ const SideBar = ({ isOpen, toggle, handleLogout }) => {
             <SidebarLink to="/Profile">Profile</SidebarLink>
           </SidebarMenu>
           <SidebarMenu>
-            <SidebarLink onClick={handleLogout}>
-              {/*change from router Link to normal to remove error "failed prop type" */}
-              Logout
-            </SidebarLink>
+            <LogoutLink onClick={handleLogout}>Logout</LogoutLink>
           </SidebarMenu>
         </SidebarWrapper>
       </SidebarContainer>
