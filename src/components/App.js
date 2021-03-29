@@ -10,8 +10,9 @@ import Profile from './pages/Profile';
 import NavBar from './NavBar';
 import SideBar from './SideBar';
 import 'firebase/auth';
-import { firebaseApp, db } from '../Firebase.js';
 import { LocalConvenienceStoreOutlined } from '@material-ui/icons';
+import { firebaseApp, db } from '../firebase.js';
+
 
 const App = ({ history }) => {
   // const [isLoggedIn, setIsLoggedIn] = useState();
@@ -35,7 +36,6 @@ const App = ({ history }) => {
   };
 
   const handleLogout = () => {
-    console.log(localStorage.getItem('token'));
     localStorage.removeItem('token');
     history.push('/');
   };
