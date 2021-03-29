@@ -1,10 +1,7 @@
 const faker = require('faker');
 const geofire = require('geofire-common');
 const randomLocation = require('random-location');
-const projectId = 'nbrly-e50b3';
-const { db, admin } = require('../Firebase.js');
-
-admin.initializeApp({ projectId });
+const { db } = require('../firebase.js');
 
 const interests = [
   'fight club',

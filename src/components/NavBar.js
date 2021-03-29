@@ -1,9 +1,9 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import { FaBars } from "react-icons/fa";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { FaBars } from 'react-icons/fa';
 // import withAuth from "./withAuth";
-import { withRouter } from "react-router";
+import { withRouter } from 'react-router';
 
 const Nav = styled.nav`
 background: #CFCFCF;
@@ -99,6 +99,23 @@ const NavLinks = styled(Link)`
     border-bottom: 3px solid red;
   }
 `;
+
+const LogoutLink = styled.a`
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  padding: 1rem;
+  height: 115%;
+  cursor: pointer;
+
+  &.active {
+    border-bottom: 3px solid red;
+  }
+`;
+
 const Navbar = ({ toggle, handleLogout }) => {
   return (
     <>
@@ -120,9 +137,7 @@ const Navbar = ({ toggle, handleLogout }) => {
             <NavLinks to="/Profile">My Profile</NavLinks>
           </NavItem>
           <NavItem>
-            <NavLinks onClick={handleLogout}>
-              Logout
-            </NavLinks>
+            <LogoutLink onClick={handleLogout}>Logout</LogoutLink>
           </NavItem>
         </NavMenu>
       </Nav>

@@ -22,14 +22,14 @@ const ActivitySelect = () => {
   let value = 0;
   const options = interests.map((interest) => {
     value = +1;
-    return <option value={value}>{interest}</option>;
+    return <option key={interest} value={value}>{interest}</option>;
   });
   
   return (
     <>
       <DropMenuWrap>
-        <select class="form-select" aria-label="Default select example">
-        <option selected>Open this select menu</option>
+        <select className="form-select" aria-label="Default select example">
+        <option defaultValue>Open this select menu</option>
           {options}
         </select>
       </DropMenuWrap>
