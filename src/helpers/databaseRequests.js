@@ -1,13 +1,11 @@
 import { firebaseApp, storage } from '../firebase';
 
-
 export const createUser = async (
   profileData,
   selectedFile,
   email,
   password
 ) => {
-  console.log('creating user');
   const userCredential = await firebaseApp
     .auth()
     .createUserWithEmailAndPassword(email, password);
@@ -27,4 +25,3 @@ export const createUser = async (
     .set({ ...profileData, profileImage: imageURL });
   return userCredential;
 };
-
