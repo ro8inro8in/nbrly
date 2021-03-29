@@ -11,11 +11,13 @@ import NavBar from './NavBar';
 import SideBar from './SideBar';
 import 'firebase/auth';
 import { firebaseApp, db } from '../Firebase.js';
+import { LocalConvenienceStoreOutlined } from '@material-ui/icons';
 
 const App = ({ history }) => {
   // const [isLoggedIn, setIsLoggedIn] = useState();
   const [geolocation, setGeolocation] = useState();
   const [isOpen, setIsOpen] = useState(false);
+  const [error, setError] = useState("")
 
   const toggle = () => {
     setIsOpen(!isOpen);
@@ -40,13 +42,15 @@ const App = ({ history }) => {
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
+      console.log(error)
       console.log(position.coords.latitude);
+      setError("No Location please check browser location settings");
       setGeolocation({
         latitude: position.coords.latitude,
         longitude: position.coords.longitude,
       });
     });
-  }, []);
+  }, [error]);
 
   return (
     <div className="App">
