@@ -1,23 +1,23 @@
-import { useState, useEffect } from "react";
-import "../App.css";
-import { Route, Switch, Redirect } from "react-router-dom";
-import { withRouter } from "react-router";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import Footer from "./Footer";
-import Home from "./pages/Home";
-import Profile from "./pages/Profile";
-import NavBar from "./NavBar";
-import SideBar from "./SideBar";
-import "firebase/auth";
-import { LocalConvenienceStoreOutlined } from "@material-ui/icons";
-import { firebaseApp, db } from "../firebase.js";
+import { useState, useEffect } from 'react';
+import '../App.css';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import Footer from './Footer';
+import Home from './pages/Home';
+import Profile from './pages/Profile';
+import NavBar from './NavBar';
+import SideBar from './SideBar';
+import 'firebase/auth';
+import { LocalConvenienceStoreOutlined } from '@material-ui/icons';
+import { firebaseApp, db } from '../firebase.js';
 
 const App = ({ history }) => {
   // const [isLoggedIn, setIsLoggedIn] = useState();
   const [geolocation, setGeolocation] = useState();
   const [isOpen, setIsOpen] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   const toggle = () => {
     setIsOpen(!isOpen);
@@ -28,30 +28,30 @@ const App = ({ history }) => {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then((userCred) => {
-        localStorage.setItem("token", userCred.user.refreshToken);
-        history.push("/Home");
+        localStorage.setItem('token', userCred.user.refreshToken);
+        history.push('/Home');
       })
       .catch((error) => console.log(error));
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    history.push("/");
+    localStorage.removeItem('token');
+    history.push('/');
   };
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      console.log(error);
-      console.log(position.coords.latitude);
-      if (!navigator.geolocation) {
-        setError("No Location please check browser location settings");
-      } else {
+    if (!navigator.geolocation) {
+      // setError('No Location please check browser location settings');
+      alert('No Location please check browser location settings');
+    } else {
+      navigator.geolocation.getCurrentPosition((position) => {
+        console.log(position.coords.latitude);
         setGeolocation({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
         });
-      }
-    });
+      });
+    }
   }, [error]);
 
   return (
