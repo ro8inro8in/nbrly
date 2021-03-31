@@ -23,18 +23,6 @@ const App = ({ history }) => {
     setIsOpen(!isOpen);
   };
 
-  const getSearchResults = async (activity) => {
-    const usersRef = db.collection("users");
-    const matchedUsersDocs = await usersRef
-      .where("interests", "array-contains", activity)
-      .get();
-    let matchedUsers = [];
-    matchedUsersDocs.forEach((doc) => {
-      matchedUsers.push(doc.data());
-    });
-    console.log(matchedUsers);
-  };
-
   getSearchResults("fight club");
 
   const handleLogin = (email, password) => {
