@@ -12,6 +12,10 @@ import SideBar from "./SideBar";
 import "firebase/auth";
 import { LocalConvenienceStoreOutlined } from "@material-ui/icons";
 import { firebaseApp, db } from "../configFirebase.js";
+import {
+  getMatchedUsers,
+  calculateDistance,
+} from "../helpers/getSearchResults";
 
 const App = ({ history }) => {
   // const [isLoggedIn, setIsLoggedIn] = useState();
@@ -23,7 +27,11 @@ const App = ({ history }) => {
     setIsOpen(!isOpen);
   };
 
-  getSearchResults("fight club");
+  const getSearchResults = async () => {
+    const userList = await getMatchedUsers("fight club");
+    const userDistance = calculateDistance(geolocation, userList);
+    console.log(userDistance);
+  };
 
   const handleLogin = (email, password) => {
     firebaseApp
@@ -71,6 +79,11 @@ const App = ({ history }) => {
       alert("Sorry, your browser is not compatible with NBRLY.");
     }
   }, []);
+
+  // getSearchResults();
+  setTimeout(function () {
+    getSearchResults();
+  }, 3000);
 
   return (
     <div className="App">
