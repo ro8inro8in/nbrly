@@ -19,30 +19,23 @@ const App = ({ history }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [error, setError] = useState('');
 
-
   const toggle = () => {
     setIsOpen(!isOpen);
   };
 
-
-  const getSearchResults = async () => {
-    // const usersRef = db.collection('users');
-    // usersRef
-    //   .where('interests', 'array-contains', activity)
-    //   .get()
-    //   .then(matchedUsers => { console.log(matchedUsers)})
-    //   .catch(error => console.error(error))
-    //return matchedUsers;
-    const userRef = db.collection('users').doc('Ke3wFvI0w1tbtmmR1x7d');
-    const doc = await userRef.get();
-    if (!doc.exists) {
-      console.log('No such document!');
-    } else {
-      console.log('Document data:', doc.data());
-    }
+  const getSearchResults = async (activity) => {
+    const usersRef = db.collection('users');
+    const matchedUsersDocs = await usersRef
+      .where('interests', 'array-contains', activity)
+      .get();
+    let matchedUsers = [];
+    matchedUsersDocs.forEach((doc) => {
+      matchedUsers.push(doc.data());
+    });
+    console.log(matchedUsers);
   };
 
-  getSearchResults();
+  getSearchResults('fight club');
 
   const handleLogin = (email, password) => {
     firebaseApp
