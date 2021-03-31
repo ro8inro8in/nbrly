@@ -11,7 +11,7 @@ import NavBar from "./NavBar";
 import SideBar from "./SideBar";
 import "firebase/auth";
 import { LocalConvenienceStoreOutlined } from "@material-ui/icons";
-import { firebaseApp, db } from "../firebase.js";
+import { firebaseApp, db } from "../configFirebase.js";
 
 const App = ({ history }) => {
   // const [isLoggedIn, setIsLoggedIn] = useState();

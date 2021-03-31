@@ -1,4 +1,4 @@
-import { firebaseApp, storage } from '../firebase';
+import { firebaseApp, storage } from '../configFirebase';
 
 export const createUser = async (
   profileData,
