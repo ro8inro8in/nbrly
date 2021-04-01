@@ -1,6 +1,6 @@
-import ResultItem from './ResultItem';
-import styled from 'styled-components';
-import users from '../lib/mock_user_data.json';
+import ResultItem from "./ResultItem";
+import styled from "styled-components";
+import users from "../lib/mock_user_data.json";
 
 const ResultsWrap = styled.div`
   width: 90%;
@@ -16,12 +16,13 @@ const ResultsText = styled.p`
   font-size: 1.2rem;
   font-weight: 600;
 
-   @media screen and (max-width: 700px) {
+  @media screen and (max-width: 700px) {
     font-size: 0.8rem;
   }
 `;
 
-const Results = () => {
+const Results = ({ orderedMatches }) => {
+  console.log(orderedMatches);
   const searchResults = users.map((user) => {
     return (
       <ResultItem
@@ -29,7 +30,7 @@ const Results = () => {
         userID={user.id}
         pic={user.image}
         name={`${user.first_name} ${user.last_name}`}
-        location={`${user.longitude}, ${user.latitude}`}
+        // distance={`<${user.distance} mi.`}
       />
     );
   });

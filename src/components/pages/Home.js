@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import ActivitySelect from "../ActivitySelect";
 import Results from "../Results";
 import withAuth from "../withAuth";
+import {
+  getMatchedUsers,
+  calculateDistance,
+  sortByDistance,
+} from "../../helpers/getSearchResults";
 
 const TitleHomeWrap = styled.div`
 
@@ -18,14 +23,23 @@ align-items: center;
   text-align: center;
 }
 `;
-const Home = () => {
+const Home = ({ geolocation }) => {
+  const [orderedMatches, setOrderedMatches] = useState([]);
+
+  const getSearchResults = async (activity) => {
+    const userList = await getMatchedUsers(activity);
+    const userDistance = calculateDistance(geolocation, userList);
+    const sortedMatches = sortByDistance(userDistance);
+    setOrderedMatches(sortedMatches);
+  };
+
   return (
     <>
       <TitleHomeWrap>
         <h2>What do you want to do today?</h2>
       </TitleHomeWrap>
-      <ActivitySelect />
-      <Results />
+      <ActivitySelect getSearchResults={getSearchResults} />
+      <Results orderedMatches={orderedMatches} />
     </>
   );
 };

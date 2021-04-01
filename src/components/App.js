@@ -12,10 +12,6 @@ import SideBar from "./SideBar";
 import "firebase/auth";
 import { LocalConvenienceStoreOutlined } from "@material-ui/icons";
 import { firebaseApp, db } from "../configFirebase.js";
-import {
-  getMatchedUsers,
-  calculateDistance,
-} from "../helpers/getSearchResults";
 
 const App = ({ history }) => {
   // const [isLoggedIn, setIsLoggedIn] = useState();
@@ -25,12 +21,6 @@ const App = ({ history }) => {
 
   const toggle = () => {
     setIsOpen(!isOpen);
-  };
-
-  const getSearchResults = async () => {
-    const userList = await getMatchedUsers("fight club");
-    const userDistance = calculateDistance(geolocation, userList);
-    console.log(userDistance);
   };
 
   const handleLogin = (email, password) => {
@@ -80,11 +70,6 @@ const App = ({ history }) => {
     }
   }, []);
 
-  // getSearchResults();
-  setTimeout(function () {
-    getSearchResults();
-  }, 3000);
-
   return (
     <div className="App">
       <SideBar isOpen={isOpen} toggle={toggle} handleLogout={handleLogout} />
@@ -94,7 +79,7 @@ const App = ({ history }) => {
           <Login handleLogin={handleLogin} />
         </Route>
         <Route exact path="/Home">
-          <Home />
+          <Home geolocation={geolocation} />
         </Route>
         <Route exact path="/Profile">
           <Profile />

@@ -3,7 +3,7 @@ const { db } = require("../configFirebase");
 const geodist = require("geodist");
 
 export const getMatchedUsers = async (activity) => {
-  console.log("Getting Matched Users!!!")
+  console.log("Getting Matched Users!!!");
   const usersRef = db.collection("users");
   const matchedUsersDocs = await usersRef
     .where("interests", "array-contains", activity)
@@ -11,7 +11,6 @@ export const getMatchedUsers = async (activity) => {
   let matchedUsers = [];
   matchedUsersDocs.forEach((doc) => {
     matchedUsers.push(doc.data());
-
   });
   return matchedUsers;
 };
@@ -21,9 +20,14 @@ export const calculateDistance = (currentUser, userList) => {
     const distance = geodist(
       currentUser,
       { latitude: user.latitude, longitude: user.longitude },
-      { format: true, unit: "mi." }
+      { unit: "mi", exact: true }
     );
-    return { ...user, distance };
+    return { ...user, distance: Math.ceil(distance) };
   });
 };
 
+export const sortByDistance = (distanceUserList) => {
+  return distanceUserList.sort((userA, userB) =>
+    userA.distance >= userB.distance ? 1 : -1
+  );
+};

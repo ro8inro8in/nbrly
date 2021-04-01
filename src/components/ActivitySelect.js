@@ -1,7 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 // import { DropdownButton, Dropdown } from "react-bootstrap";
-import interests from '../lib/interests';
+import interests from "../lib/interests";
 
 const DropMenuWrap = styled.div`
 height: 80px:
@@ -18,18 +18,27 @@ font-size: 1rem;
 }
 `;
 
-const ActivitySelect = () => {
-  let value = 0;
+const ActivitySelect = ({ getSearchResults }) => {
+  // let value = 0;
   const options = interests.map((interest) => {
-    value = +1;
-    return <option key={interest} value={value}>{interest}</option>;
+    // value = +1;
+    return (
+      <option key={interest} value={interest}>
+        {interest}
+      </option>
+    );
   });
-  
+
   return (
     <>
       <DropMenuWrap>
-        <select className="form-select" aria-label="Default select example">
-        <option defaultValue>Open this select menu</option>
+        <select
+          onChange={(event) => getSearchResults(event.target.value)}
+          name="user-activity"
+          className="form-select"
+          aria-label="Default select example"
+        >
+          <option defaultValue>Open this select menu</option>
           {options}
         </select>
       </DropMenuWrap>
