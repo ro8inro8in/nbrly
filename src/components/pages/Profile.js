@@ -35,7 +35,8 @@ const UserBio = styled.div`
   }
 `;
 
-const Profile = () => {
+const Profile = ({test}) => {
+  console.log({test})
   return (
     <>
       <UserCard>

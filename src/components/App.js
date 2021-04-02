@@ -82,7 +82,7 @@ const App = ({ history }) => {
           <Home geolocation={geolocation} />
         </Route>
         <Route exact path="/Profile">
-          <Profile />
+          <Profile test="Hello!"/>
         </Route>
         <Route exact path="/Signup">
           <Signup geolocation={geolocation} />

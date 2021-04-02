@@ -1,10 +1,10 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 const withAuth = (Component) => {
-  const AuthRoute = () => {
+  const AuthRoute = (props) => {
     const isAuth = !!localStorage.getItem("token");
     if (isAuth) {
-      return <Component />;
+      return <Component {...props} />;
     } else {
       return <Redirect to="/" />;
     }
