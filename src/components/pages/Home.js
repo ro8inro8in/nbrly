@@ -25,6 +25,7 @@ align-items: center;
 `;
 
 const Home = ({ geolocation }) => {
+  console.log({geolocation})
   const [orderedMatches, setOrderedMatches] = useState([]);
   
   const getSearchResults = async (activity) => {
