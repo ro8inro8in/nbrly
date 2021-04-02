@@ -23,9 +23,10 @@ align-items: center;
   text-align: center;
 }
 `;
+
 const Home = ({ geolocation }) => {
   const [orderedMatches, setOrderedMatches] = useState([]);
-
+  
   const getSearchResults = async (activity) => {
     const userList = await getMatchedUsers(activity);
     const userDistance = calculateDistance(geolocation, userList);

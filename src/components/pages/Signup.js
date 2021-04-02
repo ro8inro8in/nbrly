@@ -30,6 +30,7 @@ import { createUser } from '../../helpers/databaseRequests.js';
 const geofire = require('geofire-common');
 
 const SignUp = ({ geolocation, logIn, history }) => {
+  console.log('signup', { geolocation });
   const initialState = {
     fields: {
       firstName: '',
@@ -136,11 +137,11 @@ const SignUp = ({ geolocation, logIn, history }) => {
           fields.password
         );
         localStorage.setItem('token', userCredential.user.refreshToken);
-        alert('Your profile was successfully created')
+        alert('Your profile was successfully created');
         history.push('/Home');
       } catch (error) {
-        console.error(error)
-        alert('Oops, something went wrong. Please try again later.')
+        console.error(error);
+        alert('Oops, something went wrong. Please try again later.');
       }
     }
   };

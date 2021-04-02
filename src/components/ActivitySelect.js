@@ -12,7 +12,6 @@ justify-content: center;
 align-items: center;
 font-size: 1rem;
 
-
 @media screen and (max-width: 960px) {
   transition: 0.8s all ease;
 }

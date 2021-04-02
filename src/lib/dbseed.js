@@ -1,7 +1,7 @@
 const faker = require('faker');
 const geofire = require('geofire-common');
 const randomLocation = require('random-location');
-const { db } = require('../firebase.js');
+const { db } = require('../configFirebase.js');
 
 const interests = [
   'fight club',
@@ -67,11 +67,11 @@ const getLocation = () => {
   return { ...userLocation, hash };
 };
 
-function getSeedData() {
+function seedDatabase() {
   try {
     [...Array(10).keys()].map(() => {
       const location = getLocation();
-      return db.collection('users').add({
+      const profileData = {
         firstName: faker.name.firstName(),
         lastName: faker.name.lastName(),
         age: Math.floor(Math.random() * 100),
@@ -80,9 +80,13 @@ function getSeedData() {
         geohash: location.hash,
         latitude: location.latitude,
         longitude: location.longitude,
-        email: faker.internet.email(),
-        password: faker.internet.password(),
-        profileImg: faker.image.imageUrl(),
+      };
+      const selectedFile = faker.image.imageUrl()
+      const email = faker.internet.email()
+      const password = faker.internet.password()
+      return db.collection('users').add({
+      
+
       });
     });
 
@@ -92,4 +96,4 @@ function getSeedData() {
   }
 }
 
-getSeedData();
+seedDatabase();
