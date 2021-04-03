@@ -16,6 +16,8 @@ export const getMatchedUsers = async (activity) => {
 };
 
 export const calculateDistance = (currentUser, userList) => {
+  console.log({ currentUser });
+
   return userList.map((user) => {
     const distance = geodist(
       currentUser,

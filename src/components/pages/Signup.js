@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState } from 'react';
-import 'firebase/auth';
-import interests from '../../lib/interests';
-import { FormGroup, Input } from 'reactstrap';
-import CheckBox from '../CheckBox';
-import ErrorMessage from '../ErrorMessage';
-import { withRouter } from 'react-router';
+import React, { useState, useEffect } from "react";
+import "firebase/auth";
+import interests from "../../lib/interests";
+import { FormGroup, Input } from "reactstrap";
+import CheckBox from "../CheckBox";
+import ErrorMessage from "../ErrorMessage";
+import { withRouter } from "react-router";
 
 import {
   LoginForm,
@@ -23,29 +23,29 @@ import {
   Subheading,
   TextArea,
   Button,
-} from '../../styles/SignUpStyles.js';
+} from "../../styles/SignUpStyles.js";
 
-import { createUser } from '../../helpers/databaseRequests.js';
+import { createUser } from "../../helpers/databaseRequests.js";
 
-const geofire = require('geofire-common');
+const geofire = require("geofire-common");
 
-const SignUp = ({ geolocation, logIn, history }) => {
+const SignUp = ({ geolocation, logIn, history, updateLocation }) => {
   const initialState = {
     fields: {
-      firstName: '',
-      lastName: '',
-      age: '',
-      email: '',
-      confirmEmail: '',
-      password: '',
-      confirmPassword: '',
-      aboutMe: '',
+      firstName: "",
+      lastName: "",
+      age: "",
+      email: "",
+      confirmEmail: "",
+      password: "",
+      confirmPassword: "",
+      aboutMe: "",
     },
     interestsSelectors: interests.map((interest) => {
       return { value: interest, isChecked: false };
     }),
     selectedFile: null,
-    imagePreview: '../images/profileplaceholder.png',
+    imagePreview: "../images/profileplaceholder.png",
     errors: {
       firstName: false,
       lastName: false,
@@ -69,11 +69,15 @@ const SignUp = ({ geolocation, logIn, history }) => {
   const [imagePreview, setImagePreview] = useState(initialState.imagePreview);
   const [errors, setErrors] = useState(initialState.errors);
   const errorMessages = {
-    blank: 'Field cannot be blank',
-    checkboxes: 'Please tick at least one',
+    blank: "Field cannot be blank",
+    checkboxes: "Please tick at least one",
     emailMatch: `Emails don't match`,
     passwordMatch: `Passwords don't match`,
   };
+
+  useEffect(() => {
+    updateLocation();
+  }, []);
 
   // ? tempporary fix to handle lack of location data
   let hash;
@@ -135,12 +139,12 @@ const SignUp = ({ geolocation, logIn, history }) => {
           fields.email,
           fields.password
         );
-        localStorage.setItem('token', userCredential.user.refreshToken);
-        alert('Your profile was successfully created')
-        history.push('/Home');
+        localStorage.setItem("token", userCredential.user.refreshToken);
+        alert("Your profile was successfully created");
+        history.push("/Home");
       } catch (error) {
-        console.error(error)
-        alert('Oops, something went wrong. Please try again later.')
+        console.error(error);
+        alert("Oops, something went wrong. Please try again later.");
       }
     }
   };
@@ -182,7 +186,7 @@ const SignUp = ({ geolocation, logIn, history }) => {
           <CustomFileUpload>
             Choose image
             <input
-              style={{ display: 'none' }}
+              style={{ display: "none" }}
               type="file"
               accept="image/png, image/jpeg"
               onChange={fileSelectedHandler}

@@ -39,7 +39,7 @@ const App = ({ history }) => {
     history.push("/");
   };
 
-  useEffect(() => {
+  const updateLocation = () => {
     if (navigator.geolocation) {
       navigator.permissions
         .query({ name: "geolocation" })
@@ -68,6 +68,10 @@ const App = ({ history }) => {
     } else {
       alert("Sorry, your browser is not compatible with NBRLY.");
     }
+  };
+
+  useEffect(() => {
+    updateLocation();
   }, []);
 
   return (
@@ -79,13 +83,13 @@ const App = ({ history }) => {
           <Login handleLogin={handleLogin} />
         </Route>
         <Route exact path="/Home">
-          <Home geolocation={geolocation} />
+          <Home geolocation={geolocation} updateLocation={updateLocation} />
         </Route>
         <Route exact path="/Profile">
-          <Profile test="Hello!"/>
+          <Profile test="Hello!" />
         </Route>
         <Route exact path="/Signup">
-          <Signup geolocation={geolocation} />
+          <Signup geolocation={geolocation} updateLocation={updateLocation} />
           {/* logIn={logIn} */}
         </Route>
       </Switch>

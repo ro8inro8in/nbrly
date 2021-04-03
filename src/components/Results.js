@@ -1,6 +1,7 @@
 import ResultItem from "./ResultItem";
 import styled from "styled-components";
 import users from "../lib/mock_user_data.json";
+// import "./images/profileplaceholder.png";
 
 const ResultsWrap = styled.div`
   width: 90%;
@@ -23,14 +24,14 @@ const ResultsText = styled.p`
 
 const Results = ({ orderedMatches }) => {
   console.log(orderedMatches);
-  const searchResults = users.map((user) => {
+  const searchResults = orderedMatches.map((user) => {
     return (
       <ResultItem
-        key={user.id}
-        userID={user.id}
-        pic={user.image}
-        name={`${user.first_name} ${user.last_name}`}
-        // distance={`<${user.distance} mi.`}
+        key={`${user.firstName} ${user.lastName}`}
+        userID={`${user.firstName} ${user.lastName}`}
+        name={`${user.firstName} ${user.lastName}`}
+        location={`< ${user.distance} mi.`}
+        pic="./images/profileplaceholder.png"
       />
     );
   });

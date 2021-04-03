@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import ActivitySelect from "../ActivitySelect";
 import Results from "../Results";
@@ -24,11 +24,20 @@ align-items: center;
 }
 `;
 
-const Home = ({ geolocation }) => {
-  console.log({geolocation})
+const Home = ({ geolocation, updateLocation }) => {
+  console.log({ geolocation });
   const [orderedMatches, setOrderedMatches] = useState([]);
-  
+
+  useEffect(() => {
+    updateLocation();
+  }, []);
+
   const getSearchResults = async (activity) => {
+    if (!geolocation) {
+      alert("Sorry, something went wrong. Please refresh your browser.");
+      return;
+    }
+
     const userList = await getMatchedUsers(activity);
     const userDistance = calculateDistance(geolocation, userList);
     const sortedMatches = sortByDistance(userDistance);
