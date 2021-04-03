@@ -12,12 +12,17 @@ import SideBar from "./SideBar";
 import "firebase/auth";
 import { LocalConvenienceStoreOutlined } from "@material-ui/icons";
 import { firebaseApp, db } from "../configFirebase.js";
+import {
+  getMatchedUsers,
+  calculateDistance,
+  sortByDistance,
+} from "../helpers/getSearchResults";
 
 const App = ({ history }) => {
   // const [isLoggedIn, setIsLoggedIn] = useState();
   const [geolocation, setGeolocation] = useState();
   const [isOpen, setIsOpen] = useState(false);
-  const [error, setError] = useState("");
+  const [orderedMatches, setOrderedMatches] = useState([]);
 
   const toggle = () => {
     setIsOpen(!isOpen);
@@ -74,6 +79,18 @@ const App = ({ history }) => {
     updateLocation();
   }, []);
 
+  const getSearchResults = async (activity) => {
+    if (!geolocation) {
+      alert("Sorry, something went wrong. Please refresh your browser.");
+      return;
+    }
+
+    const userList = await getMatchedUsers(activity);
+    const userDistance = calculateDistance(geolocation, userList);
+    const sortedMatches = sortByDistance(userDistance);
+    setOrderedMatches(sortedMatches);
+  };
+
   return (
     <div className="App">
       <SideBar isOpen={isOpen} toggle={toggle} handleLogout={handleLogout} />
@@ -83,10 +100,15 @@ const App = ({ history }) => {
           <Login handleLogin={handleLogin} />
         </Route>
         <Route exact path="/Home">
-          <Home geolocation={geolocation} updateLocation={updateLocation} />
+          <Home
+            geolocation={geolocation}
+            updateLocation={updateLocation}
+            getSearchResults={getSearchResults}
+            orderedMatches={orderedMatches}
+          />
         </Route>
         <Route exact path="/Profile">
-          <Profile test="Hello!" />
+          <Profile />
         </Route>
         <Route exact path="/Signup">
           <Signup geolocation={geolocation} updateLocation={updateLocation} />

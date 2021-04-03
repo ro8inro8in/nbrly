@@ -3,11 +3,6 @@ import styled from "styled-components";
 import ActivitySelect from "../ActivitySelect";
 import Results from "../Results";
 import withAuth from "../withAuth";
-import {
-  getMatchedUsers,
-  calculateDistance,
-  sortByDistance,
-} from "../../helpers/getSearchResults";
 
 const TitleHomeWrap = styled.div`
 
@@ -24,25 +19,17 @@ align-items: center;
 }
 `;
 
-const Home = ({ geolocation, updateLocation }) => {
+const Home = ({
+  geolocation,
+  updateLocation,
+  getSearchResults,
+  orderedMatches,
+}) => {
   console.log({ geolocation });
-  const [orderedMatches, setOrderedMatches] = useState([]);
 
   useEffect(() => {
     updateLocation();
   }, []);
-
-  const getSearchResults = async (activity) => {
-    if (!geolocation) {
-      alert("Sorry, something went wrong. Please refresh your browser.");
-      return;
-    }
-
-    const userList = await getMatchedUsers(activity);
-    const userDistance = calculateDistance(geolocation, userList);
-    const sortedMatches = sortByDistance(userDistance);
-    setOrderedMatches(sortedMatches);
-  };
 
   return (
     <>
