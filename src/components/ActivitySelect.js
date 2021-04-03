@@ -17,7 +17,7 @@ font-size: 1rem;
 }
 `;
 
-const ActivitySelect = ({ getSearchResults }) => {
+const ActivitySelect = ({ handleActivitySelect }) => {
   // let value = 0;
   const options = interests.map((interest) => {
     // value = +1;
@@ -32,12 +32,12 @@ const ActivitySelect = ({ getSearchResults }) => {
     <>
       <DropMenuWrap>
         <select
-          onChange={(event) => getSearchResults(event.target.value)}
+          onChange={(event) => handleActivitySelect(event)}
           name="user-activity"
           className="form-select"
           aria-label="Default select example"
         >
-          <option defaultValue>Open this select menu</option>
+          <option defaultValue>Choose an activity</option>
           {options}
         </select>
       </DropMenuWrap>

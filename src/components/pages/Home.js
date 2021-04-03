@@ -31,13 +31,21 @@ const Home = ({
     updateLocation();
   }, []);
 
+const [selectedActivity, setSelectedActivity]=useState("Choose an activity")
+
+const handleActivitySelect = (event) => {
+  const {value} = event.target
+  setSelectedActivity(value)
+  getSearchResults(value)
+}
+
   return (
     <>
       <TitleHomeWrap>
         <h2>What do you want to do today?</h2>
       </TitleHomeWrap>
-      <ActivitySelect getSearchResults={getSearchResults} />
-      <Results orderedMatches={orderedMatches} />
+      <ActivitySelect getSearchResults={getSearchResults} handleActivitySelect={handleActivitySelect} />
+      <Results orderedMatches={orderedMatches} selectedActivity={selectedActivity} />
     </>
   );
 };

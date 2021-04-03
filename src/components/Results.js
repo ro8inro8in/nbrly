@@ -1,7 +1,5 @@
 import ResultItem from "./ResultItem";
 import styled from "styled-components";
-import users from "../lib/mock_user_data.json";
-// import "./images/profileplaceholder.png";
 
 const ResultsWrap = styled.div`
   width: 90%;
@@ -22,7 +20,7 @@ const ResultsText = styled.p`
   }
 `;
 
-const Results = ({ orderedMatches }) => {
+const Results = ({ orderedMatches, selectedActivity }) => {
   console.log(orderedMatches);
   const searchResults = orderedMatches.map((user) => {
     return (
@@ -39,7 +37,11 @@ const Results = ({ orderedMatches }) => {
   return (
     <>
       <ResultsWrap>
-        <ResultsText>People near you also interested in [activity]</ResultsText>
+        {(selectedActivity !== "Choose an activity") && (
+          <ResultsText>
+            People near you also interested in {selectedActivity}:
+          </ResultsText>
+        )}
         {searchResults}
       </ResultsWrap>
     </>
