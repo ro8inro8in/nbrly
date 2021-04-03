@@ -17,6 +17,7 @@
     "faker": "^5.5.0",
     "firebase": "^8.3.1",
     "firebase-admin": "^9.5.0",
+    "firestore-export-import": "^0.14.0",
     "geodist": "^0.2.1",
     "geofire-common": "^5.2.0",
     "jquery": "^3.6.0",

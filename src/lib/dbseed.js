@@ -1,7 +1,16 @@
 const faker = require("faker");
 const geofire = require("geofire-common");
 const randomLocation = require("random-location");
-const { db } = require("../configFirebase.js");
+// const { db } = require("../configFirebase.js");
+
+const serviceAccount = require('../serviceAccount.json');
+const admin = require("firebase-admin");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+const db = admin.firestore();
+
 const interests = [
   "fight club",
   "hiking",
