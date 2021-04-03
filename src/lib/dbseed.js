@@ -1,45 +1,43 @@
-const faker = require('faker');
-const geofire = require('geofire-common');
-const randomLocation = require('random-location');
-const { db } = require('../configFirebase.js');
-
+const faker = require("faker");
+const geofire = require("geofire-common");
+const randomLocation = require("random-location");
+const { db } = require("../configFirebase.js");
 const interests = [
-  'fight club',
-  'hiking',
-  'walking',
-  'partying',
-  'museums',
-  'galleries',
-  'extreme sports',
-  'tennis',
-  'running',
-  'cycling',
-  'badminton',
-  'table tennis',
-  'board games',
-  'eating out',
-  'coffee',
-  'beer',
-  'urban exploring',
-  'pokemon go',
-  'cinema',
-  'cocktails',
-  'frisbee',
-  'park hang',
-  'picnic',
-  'disc golf',
-  'arts and crafts',
-  'bowling',
-  'cheese rolling',
-  'shopping',
-  'theme parks',
-  'tea ceremonies',
-  'gong baths',
-  'yoga',
-  'cooking',
-  'live music',
+  "fight club",
+  "hiking",
+  "walking",
+  "partying",
+  "museums",
+  "galleries",
+  "extreme sports",
+  "tennis",
+  "running",
+  "cycling",
+  "badminton",
+  "table tennis",
+  "board games",
+  "eating out",
+  "coffee",
+  "beer",
+  "urban exploring",
+  "pokemon go",
+  "cinema",
+  "cocktails",
+  "frisbee",
+  "park hang",
+  "picnic",
+  "disc golf",
+  "arts and crafts",
+  "bowling",
+  "cheese rolling",
+  "shopping",
+  "theme parks",
+  "tea ceremonies",
+  "gong baths",
+  "yoga",
+  "cooking",
+  "live music",
 ];
-
 const getInterests = () => {
   const userInterests = [];
   for (let i = 0; i <= 10; i++) {
@@ -50,7 +48,6 @@ const getInterests = () => {
   }
   return userInterests;
 };
-
 const getLocation = () => {
   const userLocation = randomLocation.randomCirclePoint(
     {
@@ -59,19 +56,18 @@ const getLocation = () => {
     },
     15000
   );
-
   const hash = geofire.geohashForLocation([
     userLocation.latitude,
     userLocation.longitude,
   ]);
   return { ...userLocation, hash };
 };
-
-function seedDatabase() {
+function getSeedData() {
   try {
-    [...Array(10).keys()].map(() => {
+    [...Array(50).keys()].map(() => {
       const location = getLocation();
-      const profileData = {
+      return db.collection("users").add({
+        uid: faker.datatype.uuid(),
         firstName: faker.name.firstName(),
         lastName: faker.name.lastName(),
         age: Math.floor(Math.random() * 100),
@@ -80,20 +76,14 @@ function seedDatabase() {
         geohash: location.hash,
         latitude: location.latitude,
         longitude: location.longitude,
-      };
-      const selectedFile = faker.image.imageUrl()
-      const email = faker.internet.email()
-      const password = faker.internet.password()
-      return db.collection('users').add({
-      
-
+        email: faker.internet.email(),
+        password: faker.internet.password(),
+        profileImage: faker.image.imageUrl(),
       });
     });
-
-    console.log('database seed was successful');
+    console.log("database seed was successful");
   } catch (error) {
-    console.log(error, 'database seed failed');
+    console.log(error, "database seed failed");
   }
 }
-
-seedDatabase();
+getSeedData();
