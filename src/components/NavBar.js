@@ -116,7 +116,8 @@ const LogoutLink = styled.a`
   }
 `;
 
-const Navbar = ({ toggle, handleLogout }) => {
+const Navbar = ({ toggle, handleLogout, uid }) => {
+  console.log({ uid });
   return (
     <>
       <Nav>
@@ -134,7 +135,7 @@ const Navbar = ({ toggle, handleLogout }) => {
             <NavLinks to="/Home">Home</NavLinks>
           </NavItem>
           <NavItem>
-            <NavLinks to="/Profile">My Profile</NavLinks>
+            <NavLinks to={`/Profile/${uid}`}>My Profile</NavLinks>
           </NavItem>
           <NavItem>
             <LogoutLink onClick={handleLogout}>Logout</LogoutLink>
