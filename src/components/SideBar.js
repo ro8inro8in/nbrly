@@ -82,7 +82,7 @@ const LogoutLink = styled.a`
         transition: 0.2s ease-in-out;
     }`;
 
-const SideBar = ({ isOpen, toggle, handleLogout }) => {
+const SideBar = ({ isOpen, toggle, handleLogout, uid }) => {
   return (
     <>
       <SidebarContainer isOpen={isOpen} onClick={toggle}>
@@ -94,8 +94,9 @@ const SideBar = ({ isOpen, toggle, handleLogout }) => {
             <SidebarLink to="/Home">Home</SidebarLink>
           </SidebarMenu>
           <SidebarMenu>
-            <SidebarLink to="/Profile">Profile</SidebarLink>
+            <SidebarLink to={`/Profile/${uid}`}>My Profile</SidebarLink>
           </SidebarMenu>
+
           <SidebarMenu>
             <LogoutLink onClick={handleLogout}>Logout</LogoutLink>
           </SidebarMenu>

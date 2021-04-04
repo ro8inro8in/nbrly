@@ -84,7 +84,12 @@ const App = ({ history }) => {
 
   return (
     <div className="App">
-      <SideBar isOpen={isOpen} toggle={toggle} handleLogout={handleLogout} />
+      <SideBar
+        isOpen={isOpen}
+        toggle={toggle}
+        handleLogout={handleLogout}
+        uid={uid}
+      />
       <NavBar toggle={toggle} handleLogout={handleLogout} uid={uid} />
       <Switch>
         <Route exact path="/">
@@ -94,7 +99,11 @@ const App = ({ history }) => {
           <Home geolocation={geolocation} updateLocation={updateLocation} />
         </Route>
         <Route exact path="/Profile/:userID">
-          <Profile geolocation={geolocation} updateLocation={updateLocation} uid={uid} />
+          <Profile
+            geolocation={geolocation}
+            updateLocation={updateLocation}
+            uid={uid}
+          />
         </Route>
         <Route exact path="/Signup">
           <Signup
