@@ -10,7 +10,7 @@ export const getMatchedUsers = async (activity) => {
     .get();
   let matchedUsers = [];
   matchedUsersDocs.forEach((doc) => {
-    matchedUsers.push(doc.data());
+    matchedUsers.push({...doc.data(), uid: doc.id});
   });
   return matchedUsers;
 };

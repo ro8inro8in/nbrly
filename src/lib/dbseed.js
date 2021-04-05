@@ -74,7 +74,6 @@ function getSeedData() {
     [...Array(50).keys()].map(() => {
       const location = getLocation();
       return db.collection("users").add({
-        uid: faker.datatype.uuid(),
         firstName: faker.name.firstName(),
         lastName: faker.name.lastName(),
         age: Math.floor(Math.random() * 100),
@@ -85,7 +84,7 @@ function getSeedData() {
         longitude: location.longitude,
         email: faker.internet.email(),
         password: faker.internet.password(),
-        profileImage: faker.image.imageUrl(),
+        profileImage: faker.image.avatar(),
       });
     });
     console.log("database seed was successful");

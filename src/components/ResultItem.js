@@ -6,7 +6,8 @@ import messageBubbles from '../images/message-bubbles.svg';
 
 const ItemWrap = styled.div`
   background-color: #ffffff;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
   height: 160px;
   width: 640px;
   margin: 20px;
@@ -31,6 +32,7 @@ const UserPic = styled.img`
   width: 100%;
   height: auto;
   border-radius: 50%;
+  object-fit: cover;
 `;
 
 const UserInfoWrap = styled.div`
@@ -46,7 +48,7 @@ const UserName = styled.h3`
   }
 `;
 
-const Icon = styled(FontAwesomeIcon)``;
+//const Icon = styled(FontAwesomeIcon)``;
 
 const UserLocation = styled.p`
   margin: 0;
@@ -77,12 +79,14 @@ const ResultItem = ({ userID, pic, name, location }) => {
     <ItemWrap>
       <UserPic src={pic} alt="user's profile picture" />
       <UserInfoWrap>
-        <UserName>{name}</UserName>
+        <UserName>
+          {name}
+        </UserName>
         <UserLocation>
-          <Icon icon={faMapMarkerAlt} /> {location}
+          <FontAwesomeIcon icon={faMapMarkerAlt} /> {location}
         </UserLocation>
       </UserInfoWrap>
-      <ProfileLink>View Profile</ProfileLink>
+      <ProfileLink to={`/Profile/${userID}`}>View Profile</ProfileLink>
 
       <MessageBubbles src={messageBubbles} />
       <ContactLink>Contact</ContactLink>

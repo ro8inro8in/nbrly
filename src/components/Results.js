@@ -1,5 +1,5 @@
-import ResultItem from "./ResultItem";
-import styled from "styled-components";
+import ResultItem from './ResultItem';
+import styled from 'styled-components';
 
 const ResultsWrap = styled.div`
   width: 90%;
@@ -25,8 +25,8 @@ const Results = ({ orderedMatches, selectedActivity }) => {
   const searchResults = orderedMatches.map((user) => {
     return (
       <ResultItem
-        key={`${user.firstName} ${user.lastName}`}
-        userID={`${user.firstName} ${user.lastName}`}
+        key={user.uid}
+        userID={user.uid}
         name={`${user.firstName} ${user.lastName}`}
         location={`< ${user.distance} mi.`}
         pic="./images/profileplaceholder.png"
@@ -37,7 +37,7 @@ const Results = ({ orderedMatches, selectedActivity }) => {
   return (
     <>
       <ResultsWrap>
-        {(selectedActivity !== "Choose an activity") && (
+        {selectedActivity !== 'Choose an activity' && (
           <ResultsText>
             People near you also interested in {selectedActivity}:
           </ResultsText>
