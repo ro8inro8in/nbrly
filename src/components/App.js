@@ -18,6 +18,7 @@ const App = ({ history }) => {
   const [geolocation, setGeolocation] = useState();
   const [isOpen, setIsOpen] = useState(false);
   const [uid, setUID] = useState();
+  const [error, setError] = useState();
 
   const toggle = () => {
     setIsOpen(!isOpen);
@@ -32,7 +33,10 @@ const App = ({ history }) => {
         localStorage.setItem('token', userCred.user.refreshToken);
         history.push('/Home');
       })
-      .catch((error) => console.log(error));
+      .catch(error => {
+        alert("Please check password and email are correct!");
+        console.error("Please check password and email are correct!", error);
+      });
   };
 
   const handleLogout = () => {
