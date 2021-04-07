@@ -1,8 +1,8 @@
-import { firebaseApp, storage } from '../configFirebase';
-//const { firebaseApp, storage } = require("../configFirebase");
+import { app, storage } from '../configFirebase';
+//const { app, storage } = require("../configFirebase");
 
 export const createUser = async (profileData, selectedFile, email, password) => {
-  const userCredential = await firebaseApp
+  const userCredential = await app
     .auth()
     .createUserWithEmailAndPassword(email, password);
   const uid = userCredential.user.uid;
@@ -14,7 +14,7 @@ export const createUser = async (profileData, selectedFile, email, password) => 
   );
   await userPicRef.put(selectedFile);
   const imageURL = await userPicRef.getDownloadURL();
-  await firebaseApp
+  await app
     .firestore()
     .collection("users")
     .doc(uid)

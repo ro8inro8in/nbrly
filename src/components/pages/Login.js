@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { FormGroup, Label, Input } from "reactstrap";
-import { Link, withRouter } from "react-router-dom";
+import { Link, withRouter, useHistory } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext"
 
 
 const FormContainer = styled.div`
@@ -106,16 +107,34 @@ const LoginText = styled.div`
   }
 `;
 
-const LoginPage = ({ handleLogin }) => {
+const LoginPage = () => {
+  const [error, setError] = useState()
+  const [loading, setLoading] = useState(false)
   const [fields, setFields] = useState({
     email: "",
     password: "",
   });
+  const history = useHistory()
+  const { login } = useAuth()
+
 
   const handleFieldChange = (event) => {
     setFields({ ...fields, [event.target.name]: event.target.value });
   };
 
+  const handleLogin = async() => {
+    try {
+      setError("")
+      setLoading(true)
+      await login (fields.email, fields.password)
+      history.push("/Home")
+    } catch {
+      setError("Please check password and email are correct!")
+    }
+
+    setLoading(false)
+  }
+      
   return (
     <FormContainer>
       <TopContainer>
@@ -125,7 +144,7 @@ const LoginPage = ({ handleLogin }) => {
         </Banner>
         <LoginText>
           Connect with like-minded people in your vicinity for sports,
-          nightlife, and everything in between
+          nightlife and everything in between
         </LoginText>
       </TopContainer>
       <BottomContainer>
@@ -159,8 +178,9 @@ const LoginPage = ({ handleLogin }) => {
           </FormGroup>
 
           <LogInButton
+            disabled={loading}
             className="btn-sml btn-block"
-            onClick={() => handleLogin(fields.email, fields.password)}
+            onClick={handleLogin}
           >
             Log in
           </LogInButton>

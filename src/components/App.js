@@ -11,7 +11,8 @@ import NavBar from './NavBar';
 import SideBar from './SideBar';
 import 'firebase/auth';
 import { LocalConvenienceStoreOutlined } from '@material-ui/icons';
-import { firebaseApp, db } from '../configFirebase.js';
+import { app, db } from '../configFirebase.js';
+import { AuthProvider } from '../contexts/AuthContext';
 
 const App = ({ history }) => {
   // const [isLoggedIn, setIsLoggedIn] = useState();
@@ -24,23 +25,8 @@ const App = ({ history }) => {
     setIsOpen(!isOpen);
   };
 
-  const handleLogin = (email, password) => {
-    firebaseApp
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then((userCred) => {
-        setUID(userCred.user.uid);
-        localStorage.setItem('token', userCred.user.refreshToken);
-        history.push('/Home');
-      })
-      .catch(error => {
-        alert("Please check password and email are correct!");
-        console.error("Please check password and email are correct!", error);
-      });
-  };
-
   const handleLogout = () => {
-    firebaseApp
+    app
       .auth()
       .signOut()
       .then(() => {
@@ -88,6 +74,7 @@ const App = ({ history }) => {
 
   return (
     <div className="App">
+      <AuthProvider>
       <SideBar
         isOpen={isOpen}
         toggle={toggle}
@@ -97,7 +84,7 @@ const App = ({ history }) => {
       <NavBar toggle={toggle} handleLogout={handleLogout} uid={uid} />
       <Switch>
         <Route exact path="/">
-          <Login handleLogin={handleLogin} />
+          <Login />
         </Route>
         <Route exact path="/Home">
           <Home geolocation={geolocation} updateLocation={updateLocation} />
@@ -113,13 +100,13 @@ const App = ({ history }) => {
           <Signup
             geolocation={geolocation}
             updateLocation={updateLocation}
-            handleLogin={handleLogin}
           />
           {/* logIn={logIn} */}
         </Route>
       </Switch>
 
       <Footer />
+      </AuthProvider>
     </div>
   );
 };
