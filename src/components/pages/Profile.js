@@ -6,6 +6,7 @@ import { getUserById } from '../../helpers/getUserById';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import geodist from 'geodist';
+//import { useAuth } from "../../contexts/AuthContext"
 
 const UserImg = styled.img`
   width: 15em;

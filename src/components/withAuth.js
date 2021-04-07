@@ -1,9 +1,12 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+
 const withAuth = (Component) => {
   const AuthRoute = (props) => {
-    const isAuth = Boolean(localStorage.getItem("token"));
-    if (isAuth) {
+    const { currentUser } = useAuth ()
+    console.log(currentUser)
+    if (currentUser) {
       return <Component {...props} />;
     } else {
       return <Redirect to="/" />;
