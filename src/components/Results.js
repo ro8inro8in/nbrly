@@ -21,7 +21,7 @@ const ResultsText = styled.p`
 `;
 
 const Results = ({ orderedMatches, selectedActivity }) => {
-  console.log(orderedMatches);
+ 
   const searchResults = orderedMatches.map((user) => {
     return (
       <ResultItem

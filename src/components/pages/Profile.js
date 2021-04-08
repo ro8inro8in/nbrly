@@ -6,7 +6,7 @@ import { getUserById } from '../../helpers/getUserById';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import geodist from 'geodist';
-//import { useAuth } from "../../contexts/AuthContext"
+import { useAuth } from "../../contexts/AuthContext"
 
 const UserImg = styled.img`
   width: 15em;
@@ -49,15 +49,16 @@ const Profile = ({ geolocation, updateLocation, uid }) => {
     name: 'name',
     aboutMe: 'about',
     interests: 'interests',
-    age: '00',
+    age: 0,
     distance: 0,
   };
 
   const [userData, setUserData] = useState(initialState);
   const { userID } = useParams();
   const { profileImage, name, aboutMe, interests, age, distance } = userData;
-
-  const isThisUser = uid === userID;
+  const { currentUser } = useAuth();
+  const isThisUser  = currentUser.uid === userID;
+  
 
   useEffect(() => {
     updateLocation();

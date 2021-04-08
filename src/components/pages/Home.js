@@ -30,7 +30,7 @@ const Home = ({ geolocation, updateLocation }) => {
   const [selectedActivity, setSelectedActivity] = useState(
     'Choose an activity'
   );
-  console.log({ orderedMatches });
+
   useEffect(() => {
     updateLocation();
   }, []);

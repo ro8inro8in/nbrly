@@ -51,7 +51,7 @@ export function AuthProvider({ children }) {
     signup,
     logout,
   };
-  console.log(currentUser)
+
 
   return (
     <AuthContext.Provider value={value}>

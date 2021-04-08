@@ -5,7 +5,7 @@ import { useAuth } from "../contexts/AuthContext";
 const withAuth = (Component) => {
   const AuthRoute = (props) => {
     const { currentUser } = useAuth ()
-    console.log(currentUser)
+  
     if (currentUser) {
       return <Component {...props} />;
     } else {
