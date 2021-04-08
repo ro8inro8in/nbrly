@@ -50,9 +50,11 @@ const App = () => {
 
   const handleLogout = async () => {
     setError('');
+    window.localStorage.clear();
+    setOrderedMatches([])
     try {
       await logout();
-      await localStorage.clear();
+
       history.push('/');
     } catch {
       setError('Failed to log out');

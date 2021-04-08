@@ -18,6 +18,6 @@ export const createUser = async (profileData, selectedFile, email, password) => 
     .firestore()
     .collection("users")
     .doc(uid)
-    .set({ ...profileData, profileImage: imageURL });
+    .set({ ...profileData, profileImage: imageURL, email });
   return userCredential;
 };

@@ -141,8 +141,7 @@ const SignUp = ({
       };
       try {
         await signup(profileData, selectedFile, fields.email, fields.password);
-        // localStorage.setItem("token", userCredential.user.refreshToken);
-        alert("Your profile was successfully created");
+        //alert("Your profile was successfully created");
         history.push("/Home");
       } catch (error) {
         console.error(error);
