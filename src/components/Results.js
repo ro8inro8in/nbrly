@@ -21,8 +21,8 @@ const ResultsText = styled.p`
 `;
 
 const Results = ({ orderedMatches, selectedActivity }) => {
- 
   const searchResults = orderedMatches.map((user) => {
+    console.log(user)
     return (
       <ResultItem
         key={user.uid}
@@ -30,6 +30,7 @@ const Results = ({ orderedMatches, selectedActivity }) => {
         name={`${user.firstName} ${user.lastName}`}
         location={`< ${user.distance} mi.`}
         pic="./images/profileplaceholder.png"
+        email={user.email}
       />
     );
   });
@@ -38,11 +39,13 @@ const Results = ({ orderedMatches, selectedActivity }) => {
     <>
       <ResultsWrap>
         {selectedActivity !== 'Choose an activity' && (
-          <ResultsText>
-            People near you also interested in {selectedActivity}:
-          </ResultsText>
+          <>
+            <ResultsText>
+              People near you also interested in {selectedActivity}:
+            </ResultsText>
+            <div>{searchResults}</div>
+          </>
         )}
-        {searchResults}
       </ResultsWrap>
     </>
   );

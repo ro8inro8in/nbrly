@@ -6,7 +6,7 @@ import { getUserById } from '../../helpers/getUserById';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import geodist from 'geodist';
-import { useAuth } from "../../contexts/AuthContext"
+import { useAuth } from '../../contexts/AuthContext';
 
 const UserImg = styled.img`
   width: 15em;
@@ -43,7 +43,7 @@ const UserBio = styled.div`
   }
 `;
 
-const Profile = ({ geolocation, updateLocation, uid }) => {
+const Profile = ({ geolocation, updateLocation, orderedMatches }) => {
   const initialState = {
     profileImage: '../images/profileplaceholder.png',
     name: 'name',
@@ -57,47 +57,75 @@ const Profile = ({ geolocation, updateLocation, uid }) => {
   const { userID } = useParams();
   const { profileImage, name, aboutMe, interests, age, distance } = userData;
   const { currentUser } = useAuth();
-  const isThisUser  = currentUser.uid === userID;
-  
+  const isThisUser = currentUser.uid === userID;
+
+  useEffect(() => {
+    let user = isThisUser
+      ? currentUser
+      : orderedMatches.find((user) => user.uid === userID);
+    const {
+      firstName,
+      lastName,
+      aboutMe,
+      interests,
+      age,
+      profileImage,
+      latitude,
+      longitude,
+    } = user;
+    const interestsString = interests.join(', ');
+    const distance = geodist(geolocation, { latitude, longitude });
+    setUserData((prev) => {
+      return {
+        ...prev,
+        profileImage,
+        name: `${firstName} ${lastName}`,
+        aboutMe,
+        interests: interestsString,
+        age,
+        distance,
+      };
+    });
+  }, [userID]);
 
   useEffect(() => {
     updateLocation();
   }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const userDoc = await getUserById(userID);
-      if (!userDoc.exists) {
-        alert('User not found');
-      } else {
-        const {
-          firstName,
-          lastName,
-          aboutMe,
-          interests,
-          age,
-          profileImage,
-          latitude,
-          longitude,
-        } = userDoc.data();
-        const interestsString = interests.join(', ');
-        const distance = geodist(geolocation, { latitude, longitude });
-        setUserData((prev) => {
-          return {
-            ...prev,
-            profileImage,
-            name: `${firstName} ${lastName}`,
-            aboutMe,
-            interests: interestsString,
-            age,
-            distance,
-          };
-        });
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const userDoc = await getUserById(userID);
+  //     if (!userDoc.exists) {
+  //       alert('User not found');
+  //     } else {
+  //       const {
+  //         firstName,
+  //         lastName,
+  //         aboutMe,
+  //         interests,
+  //         age,
+  //         profileImage,
+  //         latitude,
+  //         longitude,
+  //       } = userDoc.data();
+  //       const interestsString = interests.join(', ');
+  //       const distance = geodist(geolocation, { latitude, longitude });
+  //       setUserData((prev) => {
+  //         return {
+  //           ...prev,
+  //           profileImage,
+  //           name: `${firstName} ${lastName}`,
+  //           aboutMe,
+  //           interests: interestsString,
+  //           age,
+  //           distance,
+  //         };
+  //       });
+  //     }
+  //   };
 
-    fetchData();
-  }, [userID]);
+  //   fetchData();
+  // }, [userID]);
 
   return (
     <>

@@ -74,7 +74,7 @@ const ContactLink = styled.a`
   font-weight: 600;
 `;
 
-const ResultItem = ({ userID, pic, name, location }) => {
+const ResultItem = ({ userID, pic, name, location, email }) => {
   return (
     <ItemWrap>
       <UserPic src={pic} alt="user's profile picture" />
@@ -89,7 +89,7 @@ const ResultItem = ({ userID, pic, name, location }) => {
       <ProfileLink to={`/Profile/${userID}`}>View Profile</ProfileLink>
 
       <MessageBubbles src={messageBubbles} />
-      <ContactLink>Contact</ContactLink>
+      <ContactLink href={`mailto:${email}`}>Contact</ContactLink>
     </ItemWrap>
   );
 };
