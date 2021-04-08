@@ -24,7 +24,7 @@ const LoginPage = () => {
     email: "",
     password: "",
   });
-  const history = useHistory();
+  let history = useHistory();
   const { login } = useAuth();
 
   const handleFieldChange = (event) => {
@@ -33,17 +33,18 @@ const LoginPage = () => {
 
   const handleLogin = async () => {
       // setError("");
-      // setLoading(true);
+      //setLoading(true);
     try {
     
       await login(fields.email, fields.password);
+      console.log('handlelogin line40 hi')
       history.push("/Home");
     } catch (err){ 
       console.log(err)
       // setError("Please check password and email are correct!");
     }
 
-    // setLoading(false);
+    //setLoading(false);
   };
 
   return (

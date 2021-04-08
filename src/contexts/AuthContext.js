@@ -1,6 +1,7 @@
-import React, { useContext, useState, useEffect } from "react";
-import { auth } from "../configFirebase";
-import {createUser} from "../helpers/createUser"
+import React, { useContext, useState, useEffect } from 'react';
+import { auth } from '../configFirebase';
+import { createUser } from '../helpers/createUser';
+import { getUserById } from '../helpers/getUserById';
 
 const AuthContext = React.createContext();
 
@@ -15,7 +16,7 @@ export function AuthProvider({ children }) {
   function signup(profileData, selectedFile, email, password) {
     return createUser(profileData, selectedFile, email, password);
   }
-  
+
   function login(email, password) {
     return auth.signInWithEmailAndPassword(email, password);
   }
@@ -37,8 +38,13 @@ export function AuthProvider({ children }) {
   //   }
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
       setCurrentUser(user);
+      if (user) {
+        const userProfileDoc = await getUserById(user.uid);
+        const userProfile = userProfileDoc.data();
+        setCurrentUser({ uid: user.uid, email: user.email, ...userProfile });
+      }
       setLoading(false);
     });
 
@@ -51,7 +57,6 @@ export function AuthProvider({ children }) {
     signup,
     logout,
   };
-
 
   return (
     <AuthContext.Provider value={value}>

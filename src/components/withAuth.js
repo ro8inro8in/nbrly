@@ -1,11 +1,10 @@
-import React from "react";
-import { Redirect } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext";
+import React from 'react';
+import { Redirect } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 const withAuth = (Component) => {
   const AuthRoute = (props) => {
-    const { currentUser } = useAuth ()
-  
+    const { currentUser } = useAuth();
     if (currentUser) {
       return <Component {...props} />;
     } else {

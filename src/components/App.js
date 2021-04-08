@@ -14,12 +14,22 @@ import 'firebase/auth';
 // import { app, db } from "../configFirebase.js";
 import { AuthProvider } from '../contexts/AuthContext';
 import { useAuth } from '../contexts/AuthContext';
+import {
+  getMatchedUsers,
+  calculateDistance,
+  sortByDistance,
+} from '../helpers/getSearchResults';
+import useLocalStorage from '../customHooks/useLocalStorage';
 
 const App = () => {
   // const [isLoggedIn, setIsLoggedIn] = useState();
   const [geolocation, setGeolocation] = useState();
   const [isOpen, setIsOpen] = useState(false);
   const [error, setError] = useState();
+  const [orderedMatches, setOrderedMatches] = useLocalStorage(
+    'orderedMatches',
+    []
+  );
   const history = useHistory();
   const { currentUser, logout } = useAuth();
 
@@ -27,10 +37,22 @@ const App = () => {
     setIsOpen(!isOpen);
   };
 
+  const getSearchResults = async (activity) => {
+    if (!geolocation) {
+      alert('Sorry, something went wrong. Please refresh your browser.');
+      return;
+    }
+    const userList = await getMatchedUsers(activity);
+    const userDistance = calculateDistance(geolocation, userList);
+    const sortedMatches = sortByDistance(userDistance);
+    setOrderedMatches(sortedMatches);
+  };
+
   const handleLogout = async () => {
     setError('');
     try {
       await logout();
+      await localStorage.clear();
       history.push('/');
     } catch {
       setError('Failed to log out');
@@ -74,28 +96,38 @@ const App = () => {
   return (
     <div className="App">
       <AuthProvider>
-        {currentUser && <SideBar
-          isOpen={isOpen}
-          toggle={toggle}
-          handleLogout={handleLogout}
-          currentUserUid={currentUser.uid}
-        />}
-       {currentUser &&<NavBar
-          toggle={toggle}
-          handleLogout={handleLogout}
-          currentUserUid={currentUser.uid}
-        />}
+        {currentUser && (
+          <SideBar
+            isOpen={isOpen}
+            toggle={toggle}
+            handleLogout={handleLogout}
+            currentUserUid={currentUser.uid}
+          />
+        )}
+        {currentUser && (
+          <NavBar
+            toggle={toggle}
+            handleLogout={handleLogout}
+            currentUserUid={currentUser.uid}
+          />
+        )}
         <Switch>
           <Route exact path="/">
             <Login />
           </Route>
           <Route exact path="/Home">
-            <Home geolocation={geolocation} updateLocation={updateLocation} />
+            <Home
+              geolocation={geolocation}
+              updateLocation={updateLocation}
+              getSearchResults={getSearchResults}
+              orderedMatches={orderedMatches}
+            />
           </Route>
           <Route exact path="/Profile/:userID">
             <Profile
               geolocation={geolocation}
               updateLocation={updateLocation}
+              orderedMatches={orderedMatches}
             />
           </Route>
           <Route exact path="/Signup">
