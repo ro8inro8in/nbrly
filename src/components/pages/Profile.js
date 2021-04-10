@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link, useParams } from 'react-router-dom';
 import withAuth from '../withAuth';
-import { getUserById } from '../../helpers/getUserById';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import geodist from 'geodist';
@@ -22,7 +21,7 @@ const UserCard = styled.div`
   align-items: center;
 `;
 
-const EditProfileLink = styled(Link)`
+const EditProfileLink = styled.a`
   background: #ffd74b;
   padding: 0.4em;
   font-weight: bold;
@@ -43,14 +42,19 @@ const UserBio = styled.div`
   }
 `;
 
-const Profile = ({ geolocation, updateLocation, orderedMatches }) => {
+const Profile = ({
+  geolocation,
+  updateLocation,
+  orderedMatches,
+  thisUserProfile,
+}) => {
   const initialState = {
     profileImage: '../images/profileplaceholder.png',
-    name: 'name',
-    aboutMe: 'about',
-    interests: 'interests',
-    age: 0,
-    distance: 0,
+    name: '',
+    aboutMe: '',
+    interests: '',
+    age: '',
+    distance: '',
   };
 
   const [userData, setUserData] = useState(initialState);
@@ -61,7 +65,7 @@ const Profile = ({ geolocation, updateLocation, orderedMatches }) => {
 
   useEffect(() => {
     let user = isThisUser
-      ? currentUser
+      ? thisUserProfile
       : orderedMatches.find((user) => user.uid === userID);
     const {
       firstName,
@@ -91,41 +95,6 @@ const Profile = ({ geolocation, updateLocation, orderedMatches }) => {
   useEffect(() => {
     updateLocation();
   }, []);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const userDoc = await getUserById(userID);
-  //     if (!userDoc.exists) {
-  //       alert('User not found');
-  //     } else {
-  //       const {
-  //         firstName,
-  //         lastName,
-  //         aboutMe,
-  //         interests,
-  //         age,
-  //         profileImage,
-  //         latitude,
-  //         longitude,
-  //       } = userDoc.data();
-  //       const interestsString = interests.join(', ');
-  //       const distance = geodist(geolocation, { latitude, longitude });
-  //       setUserData((prev) => {
-  //         return {
-  //           ...prev,
-  //           profileImage,
-  //           name: `${firstName} ${lastName}`,
-  //           aboutMe,
-  //           interests: interestsString,
-  //           age,
-  //           distance,
-  //         };
-  //       });
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, [userID]);
 
   return (
     <>

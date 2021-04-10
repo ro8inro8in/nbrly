@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { auth } from '../configFirebase';
 import { createUser } from '../helpers/createUser';
-import { getUserById } from '../helpers/getUserById';
 
 const AuthContext = React.createContext();
 
@@ -11,7 +10,7 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
-  const [loading, setLoading] = useState(true);
+  //const [loading, setLoading] = useState(true);
 
   function signup(profileData, selectedFile, email, password) {
     return createUser(profileData, selectedFile, email, password);
@@ -22,6 +21,7 @@ export function AuthProvider({ children }) {
   }
 
   function logout() {
+    setCurrentUser(null);
     return auth.signOut();
   }
 
@@ -38,18 +38,15 @@ export function AuthProvider({ children }) {
   //   }
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
-      setCurrentUser(user);
-      if (user) {
-        const userProfileDoc = await getUserById(user.uid);
-        const userProfile = userProfileDoc.data();
-        setCurrentUser({ uid: user.uid, email: user.email, ...userProfile });
-      }
-      setLoading(false);
-    });
-
-    return unsubscribe;
-  }, []);
+    const checkAuthState = async () => {
+      await auth.onAuthStateChanged((user) => {
+        if (user) {
+          setCurrentUser(user);
+        }
+      });
+    };
+    checkAuthState();
+  }, [currentUser]);
 
   const value = {
     currentUser,
@@ -58,9 +55,5 @@ export function AuthProvider({ children }) {
     logout,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {!loading && children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { FormGroup, Label, Input } from "reactstrap";
-import { Link, withRouter, useHistory } from "react-router-dom";
-import { useAuth } from "../../contexts/AuthContext";
+import React, { useState } from 'react';
+import { FormGroup, Label, Input } from 'reactstrap';
+import { Link, withRouter, useHistory } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
 import {
   FormContainer,
   TopContainer,
@@ -15,14 +15,14 @@ import {
   LogInButton,
   LoginText,
   // Label,
-} from "../../styles/LoginStyles.js";
+} from '../../styles/LoginStyles.js';
 
 const LoginPage = () => {
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
   const [fields, setFields] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
   let history = useHistory();
   const { login } = useAuth();
@@ -31,16 +31,15 @@ const LoginPage = () => {
     setFields({ ...fields, [event.target.name]: event.target.value });
   };
 
-  const handleLogin = async () => {
-      // setError("");
-      //setLoading(true);
+  const handleLogin = async (e) => {
+    e.preventDefault()
+    // setError("");
+    //setLoading(true);
     try {
-    
       await login(fields.email, fields.password);
-      console.log('handlelogin line40 hi')
-      history.push("/Home");
-    } catch (err){ 
-      console.log(err)
+      //history.push('/Home');
+    } catch (err) {
+      console.log(err);
       // setError("Please check password and email are correct!");
     }
 

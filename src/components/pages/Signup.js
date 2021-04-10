@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from "react";
-import "firebase/auth";
-import interests from "../../lib/interests";
-import { FormGroup, Input } from "reactstrap";
-import CheckBox from "../CheckBox";
-import ErrorMessage from "../ErrorMessage";
-import { withRouter } from "react-router";
-import { useAuth } from "../../contexts/AuthContext"
+import React, { useState, useEffect } from 'react';
+import 'firebase/auth';
+import interests from '../../lib/interests';
+import { FormGroup, Input } from 'reactstrap';
+import CheckBox from '../CheckBox';
+import ErrorMessage from '../ErrorMessage';
+import { withRouter } from 'react-router';
+import { useAuth } from '../../contexts/AuthContext';
 
 import {
   LoginForm,
@@ -24,11 +24,11 @@ import {
   Subheading,
   TextArea,
   Button,
-} from "../../styles/SignUpStyles.js";
+} from '../../styles/SignUpStyles.js';
 
-import { createUser } from "../../helpers/createUser.js";
+import { createUser } from '../../helpers/createUser.js';
 
-const geofire = require("geofire-common");
+const geofire = require('geofire-common');
 
 const SignUp = ({
   geolocation,
@@ -39,20 +39,20 @@ const SignUp = ({
 }) => {
   const initialState = {
     fields: {
-      firstName: "",
-      lastName: "",
-      age: "",
-      email: "",
-      confirmEmail: "",
-      password: "",
-      confirmPassword: "",
-      aboutMe: "",
+      firstName: '',
+      lastName: '',
+      age: '',
+      email: '',
+      confirmEmail: '',
+      password: '',
+      confirmPassword: '',
+      aboutMe: '',
     },
     interestsSelectors: interests.map((interest) => {
       return { value: interest, isChecked: false };
     }),
-    selectedFile: "../images/profileplaceholder.png",
-    imagePreview: "../images/profileplaceholder.png",
+    selectedFile: '../images/profileplaceholder.png',
+    imagePreview: '../images/profileplaceholder.png',
     errors: {
       firstName: false,
       lastName: false,
@@ -76,8 +76,8 @@ const SignUp = ({
   const [imagePreview, setImagePreview] = useState(initialState.imagePreview);
   const [errors, setErrors] = useState(initialState.errors);
   const errorMessages = {
-    blank: "Field cannot be blank",
-    checkboxes: "Please tick at least one",
+    blank: 'Field cannot be blank',
+    checkboxes: 'Please tick at least one',
     emailMatch: `Emails don't match`,
     passwordMatch: `Passwords don't match`,
   };
@@ -86,16 +86,21 @@ const SignUp = ({
     updateLocation();
   }, []);
 
-  // ? tempporary fix to handle lack of location data
-  let hash;
-  if (geolocation) {
-    hash = geofire.geohashForLocation([
-      geolocation.latitude,
-      geolocation.longitude,
-    ]);
-  }
+  // // ? tempporary fix to handle lack of location data
+  // let hash;
+  // if (geolocation) {
+  //   hash = geofire.geohashForLocation([
+  //     geolocation.latitude,
+  //     geolocation.longitude,
+  //   ]);
+  // }
 
   const validateForm = (userInterests) => {
+    if (!geolocation) {
+      alert("Please allow NBRLY to access your location in order to sign up")
+      return;
+    }
+    
     let isFormValid = true;
     const values = {
       interests: userInterests.length ? false : true,
@@ -114,6 +119,7 @@ const SignUp = ({
         isFormValid = false;
       }
     }
+
     setErrors((errors) => ({ ...errors, ...values }));
     return isFormValid;
   };
@@ -135,17 +141,16 @@ const SignUp = ({
         age: fields.age,
         aboutMe: fields.aboutMe,
         interests: userInterests,
-        geohash: hash,
         latitude: geolocation.latitude,
         longitude: geolocation.longitude,
       };
       try {
         await signup(profileData, selectedFile, fields.email, fields.password);
         //alert("Your profile was successfully created");
-        history.push("/Home");
+        history.push('/Home');
       } catch (error) {
         console.error(error);
-        alert("Oops, something went wrong. Please try again later.");
+        alert('Oops, something went wrong. Please try again later.');
       }
     }
   };
@@ -187,7 +192,7 @@ const SignUp = ({
           <CustomFileUpload>
             Choose image
             <input
-              style={{ display: "none" }}
+              style={{ display: 'none' }}
               type="file"
               accept="image/png, image/jpeg"
               onChange={fileSelectedHandler}
@@ -203,7 +208,6 @@ const SignUp = ({
               id="firstname"
               name="firstName"
               type="text"
-              
               value={fields.firstName}
               onChange={handleFieldChange}
             ></Input>
@@ -214,7 +218,6 @@ const SignUp = ({
             <Input
               id="lastname"
               name="lastName"
-              
               value={fields.lastName}
               onChange={handleFieldChange}
             ></Input>
@@ -225,7 +228,6 @@ const SignUp = ({
             <Input
               id="age"
               name="age"
-              
               value={fields.age}
               onChange={handleFieldChange}
             ></Input>
@@ -238,7 +240,6 @@ const SignUp = ({
               id="email"
               name="email"
               type="email"
-              
               value={fields.email}
               onChange={handleFieldChange}
             ></Input>
@@ -255,7 +256,6 @@ const SignUp = ({
               id="confirm-email"
               name="confirmEmail"
               type="email"
-              
               value={fields.confirmEmail}
               onChange={handleFieldChange}
             ></Input>
@@ -267,7 +267,6 @@ const SignUp = ({
               id="password"
               name="password"
               type="password"
-              
               value={fields.password}
               onChange={handleFieldChange}
             ></Input>
@@ -284,7 +283,6 @@ const SignUp = ({
               id="confirm-password"
               name="confirmPassword"
               type="password"
-             
               value={fields.confirmPassword}
               onChange={handleFieldChange}
             ></Input>
