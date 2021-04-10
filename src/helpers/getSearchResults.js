@@ -29,3 +29,5 @@ export const sortByDistance = (distanceUserList) => {
     userA.distance >= userB.distance ? 1 : -1
   );
 };
+
+

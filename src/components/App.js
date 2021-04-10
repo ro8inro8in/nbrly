@@ -43,10 +43,13 @@ const App = () => {
       return;
     }
     const userList = await getMatchedUsers(activity);
-    const userDistance = calculateDistance(geolocation, userList);
+    const listWithoutCurrentUser = userList.filter((user) => user.uid !== currentUser.uid)
+    const userDistance = calculateDistance(geolocation, listWithoutCurrentUser);
     const sortedMatches = sortByDistance(userDistance);
     setOrderedMatches(sortedMatches);
   };
+
+
 
   const handleLogout = async () => {
     setError('');
