@@ -1,12 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react';
-import 'firebase/auth';
-import interests from '../../lib/interests';
-import { FormGroup, Input } from 'reactstrap';
-import CheckBox from '../CheckBox';
-import ErrorMessage from '../ErrorMessage';
-import { withRouter } from 'react-router';
-import { useAuth } from '../../contexts/AuthContext';
+import React, { useState, useEffect } from "react";
+import "firebase/auth";
+import interests from "../../lib/interests";
+import { FormGroup, Input } from "reactstrap";
+import CheckBox from "../CheckBox";
+import ErrorMessage from "../ErrorMessage";
+import { withRouter } from "react-router";
+import { useAuth } from "../../contexts/AuthContext";
+import { successToast, errorToast } from "../../util/ErrorNotification";
 
 import {
   LoginForm,
@@ -24,11 +25,11 @@ import {
   Subheading,
   TextArea,
   Button,
-} from '../../styles/SignUpStyles.js';
+} from "../../styles/SignUpStyles.js";
 
-import { createUser } from '../../helpers/createUser.js';
+import { createUser } from "../../helpers/createUser.js";
 
-const geofire = require('geofire-common');
+const geofire = require("geofire-common");
 
 const SignUp = ({
   geolocation,
@@ -39,20 +40,20 @@ const SignUp = ({
 }) => {
   const initialState = {
     fields: {
-      firstName: '',
-      lastName: '',
-      age: '',
-      email: '',
-      confirmEmail: '',
-      password: '',
-      confirmPassword: '',
-      aboutMe: '',
+      firstName: "",
+      lastName: "",
+      age: "",
+      email: "",
+      confirmEmail: "",
+      password: "",
+      confirmPassword: "",
+      aboutMe: "",
     },
     interestsSelectors: interests.map((interest) => {
       return { value: interest, isChecked: false };
     }),
-    selectedFile: '../images/profileplaceholder.png',
-    imagePreview: '../images/profileplaceholder.png',
+    selectedFile: "../images/profileplaceholder.png",
+    imagePreview: "../images/profileplaceholder.png",
     errors: {
       firstName: false,
       lastName: false,
@@ -76,8 +77,8 @@ const SignUp = ({
   const [imagePreview, setImagePreview] = useState(initialState.imagePreview);
   const [errors, setErrors] = useState(initialState.errors);
   const errorMessages = {
-    blank: 'Field cannot be blank',
-    checkboxes: 'Please tick at least one',
+    blank: "Field cannot be blank",
+    checkboxes: "Please tick at least one",
     emailMatch: `Emails don't match`,
     passwordMatch: `Passwords don't match`,
   };
@@ -97,10 +98,12 @@ const SignUp = ({
 
   const validateForm = (userInterests) => {
     if (!geolocation) {
-      alert("Please allow NBRLY to access your location in order to sign up")
+      errorToast(
+        "Please allow NBRLY to access your location in order to sign up"
+      );
       return;
     }
-    
+
     let isFormValid = true;
     const values = {
       interests: userInterests.length ? false : true,
@@ -146,11 +149,11 @@ const SignUp = ({
       };
       try {
         await signup(profileData, selectedFile, fields.email, fields.password);
-        //alert("Your profile was successfully created");
-        history.push('/Home');
+        successToast("Your profile was successfully created!");
+        history.push("/Home");
       } catch (error) {
         console.error(error);
-        alert('Oops, something went wrong. Please try again later.');
+        errorToast("Sorry, something went wrong. Please refresh your browser.");
       }
     }
   };
@@ -192,7 +195,7 @@ const SignUp = ({
           <CustomFileUpload>
             Choose image
             <input
-              style={{ display: 'none' }}
+              style={{ display: "none" }}
               type="file"
               accept="image/png, image/jpeg"
               onChange={fileSelectedHandler}
