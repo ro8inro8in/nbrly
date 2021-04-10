@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import '../App.css';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { Route, Switch, useHistory, Redirect } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -43,18 +43,18 @@ const App = () => {
       return;
     }
     const userList = await getMatchedUsers(activity);
-    const listWithoutCurrentUser = userList.filter((user) => user.uid !== currentUser.uid)
+    const listWithoutCurrentUser = userList.filter(
+      (user) => user.uid !== currentUser.uid
+    );
     const userDistance = calculateDistance(geolocation, listWithoutCurrentUser);
     const sortedMatches = sortByDistance(userDistance);
     setOrderedMatches(sortedMatches);
   };
 
-
-
   const handleLogout = async () => {
     setError('');
     window.localStorage.clear();
-    setOrderedMatches([])
+    setOrderedMatches([]);
     try {
       await logout();
 
@@ -117,8 +117,8 @@ const App = () => {
           />
         )}
         <Switch>
-          <Route exact path="/">
-            <Login />
+          <Route exact path="/">        
+            {currentUser ? <Redirect to ={{ pathname: "/Home" }} /> : <Login />}
           </Route>
           <Route exact path="/Home">
             <Home
