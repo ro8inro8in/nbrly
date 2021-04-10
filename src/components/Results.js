@@ -22,7 +22,6 @@ const ResultsText = styled.p`
 
 const Results = ({ orderedMatches, selectedActivity }) => {
   const searchResults = orderedMatches.map((user) => {
-    console.log(user)
     return (
       <ResultItem
         key={user.uid}

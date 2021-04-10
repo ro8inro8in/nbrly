@@ -20,6 +20,7 @@ import {
   sortByDistance,
 } from '../helpers/getSearchResults';
 import useLocalStorage from '../customHooks/useLocalStorage';
+import { getUserById } from '../helpers/getUserById';
 
 const App = () => {
   // const [isLoggedIn, setIsLoggedIn] = useState();
@@ -32,6 +33,18 @@ const App = () => {
   );
   const history = useHistory();
   const { currentUser, logout } = useAuth();
+  const [thisUserProfile, setThisUserProfile] = useState();
+
+  useEffect(() => {
+    if (currentUser) {
+      const getProfile = async () => {
+        const doc = await getUserById(currentUser.uid);
+        setThisUserProfile(doc.data());
+      };
+
+      getProfile();
+    }
+  }, [currentUser]);
 
   const toggle = () => {
     setIsOpen(!isOpen);
@@ -57,10 +70,9 @@ const App = () => {
     setOrderedMatches([]);
     try {
       await logout();
-
       history.push('/');
     } catch {
-      setError('Failed to log out');
+      console.log('Failed to log out');
     }
   };
 
@@ -117,8 +129,9 @@ const App = () => {
           />
         )}
         <Switch>
-          <Route exact path="/">        
-            {currentUser ? <Redirect to ={{ pathname: "/Home" }} /> : <Login />}
+          <Route exact path="/">
+            {/* <Login /> */}
+            {currentUser ? <Redirect to="/Home" /> : <Login />}
           </Route>
           <Route exact path="/Home">
             <Home
@@ -133,6 +146,7 @@ const App = () => {
               geolocation={geolocation}
               updateLocation={updateLocation}
               orderedMatches={orderedMatches}
+              thisUserProfile={thisUserProfile}
             />
           </Route>
           <Route exact path="/Signup">

@@ -37,7 +37,7 @@ const LoginPage = () => {
     //setLoading(true);
     try {
       await login(fields.email, fields.password);
-      history.push('/Home');
+      //history.push('/Home');
     } catch (err) {
       console.log(err);
       // setError("Please check password and email are correct!");
