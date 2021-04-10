@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { FormGroup, Label, Input } from 'reactstrap';
-import { Link, withRouter, useHistory } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
+import React, { useState } from "react";
+import { FormGroup, Label, Input } from "reactstrap";
+import { Link, withRouter, useHistory } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 import {
   FormContainer,
   TopContainer,
@@ -15,14 +15,15 @@ import {
   LogInButton,
   LoginText,
   // Label,
-} from '../../styles/LoginStyles.js';
+} from "../../styles/LoginStyles.js";
+import { successToast, errorToast } from "../../util/ErrorNotification";
 
 const LoginPage = () => {
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
   const [fields, setFields] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
   let history = useHistory();
   const { login } = useAuth();
@@ -32,7 +33,7 @@ const LoginPage = () => {
   };
 
   const handleLogin = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     // setError("");
     //setLoading(true);
     try {
@@ -40,7 +41,7 @@ const LoginPage = () => {
       //history.push('/Home');
     } catch (err) {
       console.log(err);
-      // setError("Please check password and email are correct!");
+      errorToast("Please check email and password are correct.");
     }
 
     //setLoading(false);

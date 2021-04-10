@@ -1,26 +1,27 @@
-import { useState, useEffect } from 'react';
-import '../App.css';
-import { Route, Switch, useHistory, Redirect } from 'react-router-dom';
-import { withRouter } from 'react-router';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-import Footer from './Footer';
-import Home from './pages/Home';
-import Profile from './pages/Profile';
-import NavBar from './NavBar';
-import SideBar from './SideBar';
-import 'firebase/auth';
+import { useState, useEffect } from "react";
+import "../App.css";
+import { Route, Switch, useHistory, Redirect } from "react-router-dom";
+import { withRouter } from "react-router";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Footer from "./Footer";
+import Home from "./pages/Home";
+import Profile from "./pages/Profile";
+import NavBar from "./NavBar";
+import SideBar from "./SideBar";
+import "firebase/auth";
 // import { LocalConvenienceStoreOutlined } from "@material-ui/icons";
 // import { app, db } from "../configFirebase.js";
-import { AuthProvider } from '../contexts/AuthContext';
-import { useAuth } from '../contexts/AuthContext';
+import { AuthProvider } from "../contexts/AuthContext";
+import { useAuth } from "../contexts/AuthContext";
 import {
   getMatchedUsers,
   calculateDistance,
   sortByDistance,
-} from '../helpers/getSearchResults';
-import useLocalStorage from '../customHooks/useLocalStorage';
-import { getUserById } from '../helpers/getUserById';
+} from "../helpers/getSearchResults";
+import useLocalStorage from "../customHooks/useLocalStorage";
+import { getUserById } from "../helpers/getUserById";
+import { successToast, errorToast } from "../util/ErrorNotification";
 
 const App = () => {
   // const [isLoggedIn, setIsLoggedIn] = useState();
@@ -28,7 +29,7 @@ const App = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [error, setError] = useState();
   const [orderedMatches, setOrderedMatches] = useLocalStorage(
-    'orderedMatches',
+    "orderedMatches",
     []
   );
   const history = useHistory();
@@ -52,7 +53,7 @@ const App = () => {
 
   const getSearchResults = async (activity) => {
     if (!geolocation) {
-      alert('Sorry, something went wrong. Please refresh your browser.');
+      errorToast("Sorry, something went wrong. Please refresh your browser.");
       return;
     }
     const userList = await getMatchedUsers(activity);
@@ -65,23 +66,23 @@ const App = () => {
   };
 
   const handleLogout = async () => {
-    setError('');
+    setError("");
     window.localStorage.clear();
     setOrderedMatches([]);
     try {
       await logout();
-      history.push('/');
+      history.push("/");
     } catch {
-      console.log('Failed to log out');
+      console.log("Failed to log out");
     }
   };
 
   const updateLocation = () => {
     if (navigator.geolocation) {
       navigator.permissions
-        .query({ name: 'geolocation' })
+        .query({ name: "geolocation" })
         .then(function (result) {
-          if (result.state === 'granted') {
+          if (result.state === "granted") {
             // console.log(result.state);//
             navigator.geolocation.getCurrentPosition((position) => {
               setGeolocation({
@@ -89,20 +90,20 @@ const App = () => {
                 longitude: position.coords.longitude,
               });
             });
-          } else if (result.state === 'prompt') {
+          } else if (result.state === "prompt") {
             //console.log(result.state);
-            alert(
-              'NBRLY needs your location to work. Please update your browser preferences.'
+            errorToast(
+              "NBRLY needs your location to work. Please update your browser preferences."
             );
-          } else if (result.state === 'denied') {
+          } else if (result.state === "denied") {
             //console.log(result.state);
-            alert(
-              'NBRLY needs your location to work. Please update your browser preferences.'
+            errorToast(
+              "NBRLY needs your location to work. Please update your browser preferences."
             );
           }
         });
     } else {
-      alert('Sorry, your browser is not compatible with NBRLY.');
+      errorToast("Sorry, your browser is not compatible with NBRLY.");
     }
   };
 
