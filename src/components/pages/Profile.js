@@ -117,7 +117,7 @@ const Profile = ({
      
       </UserCard>
       {!isThisUser && (
-      <a style={{width: "200px"}} ><Button style={{width: "200px"}}>Contact</Button></a>)}
+      <a style={{width: "200px"}} href={`mailto: ${email}`} ><Button style={{width: "200px"}}>Contact</Button></a>)}
 
       <UserBio>
         <SmallHeading>About</SmallHeading>
