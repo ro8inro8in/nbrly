@@ -6,6 +6,7 @@ import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import geodist from 'geodist';
 import { useAuth } from '../../contexts/AuthContext';
+import { Button } from '../../styles/SignUpStyles';
 
 const UserImg = styled.img`
   width: 15em;
@@ -55,11 +56,12 @@ const Profile = ({
     interests: '',
     age: '',
     distance: '',
+    email: '',
   };
 
   const [userData, setUserData] = useState(initialState);
   const { userID } = useParams();
-  const { profileImage, name, aboutMe, interests, age, distance } = userData;
+  const { profileImage, name, aboutMe, interests, age, distance, email } = userData;
   const { currentUser } = useAuth();
   const isThisUser = currentUser.uid === userID;
 
@@ -76,9 +78,11 @@ const Profile = ({
       profileImage,
       latitude,
       longitude,
+      email
     } = user;
     const interestsString = interests.join(', ');
-    const distance = geodist(geolocation, { latitude, longitude });
+    const distanceRaw = geodist(geolocation, { latitude, longitude });
+    const distance = distanceRaw+1;
     setUserData((prev) => {
       return {
         ...prev,
@@ -88,6 +92,7 @@ const Profile = ({
         interests: interestsString,
         age,
         distance,
+        email
       };
     });
   }, [userID]);
@@ -109,6 +114,7 @@ const Profile = ({
             <FontAwesomeIcon icon={faMapMarkerAlt} /> {`< ${distance} mi.`}
           </SmallHeading>
         )}
+       <a href={`mailto:${email}`}><Button >Contact</Button></a>
       </UserCard>
 
       <UserBio>
