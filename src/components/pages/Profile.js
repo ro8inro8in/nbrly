@@ -114,8 +114,9 @@ const Profile = ({
             <FontAwesomeIcon icon={faMapMarkerAlt} /> {`< ${distance} mi.`}
           </SmallHeading>
         )}
-       <a href={`mailto:${email}`}><Button >Contact</Button></a>
+     
       </UserCard>
+      <a style={{width: "200px"}} ><Button>Contact</Button></a>
 
       <UserBio>
         <SmallHeading>About</SmallHeading>
