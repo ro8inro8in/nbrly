@@ -83,7 +83,7 @@ const App = () => {
         .query({ name: "geolocation" })
         .then(function (result) {
           if (result.state === "granted") {
-            // console.log(result.state);//
+           
             navigator.geolocation.getCurrentPosition((position) => {
               setGeolocation({
                 latitude: position.coords.latitude,
@@ -91,12 +91,15 @@ const App = () => {
               });
             });
           } else if (result.state === "prompt") {
-            //console.log(result.state);
-            errorToast(
-              "NBRLY needs your location to work. Please update your browser preferences."
-            );
+            navigator.geolocation.getCurrentPosition((position) => {
+              setGeolocation({
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude,
+              });
+            });
+         
           } else if (result.state === "denied") {
-            //console.log(result.state);
+            
             errorToast(
               "NBRLY needs your location to work. Please update your browser preferences."
             );
