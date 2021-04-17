@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { FaBars } from 'react-icons/fa';
-// import withAuth from "./withAuth";
 import { withRouter } from 'react-router';
 
 const Nav = styled.nav`
@@ -22,15 +21,7 @@ z-index: 10;
   transition: 0.8s all ease;
 }
 `;
-// const NavContainer = styled.div`
-//   display: flex;
-//   justify-content: center;
-//   height: 80px;
-//   z-index: 1;
-//   width: 100%;
-//   padding: 0 24px;
-//   max-width: 1100px;
-// `;
+
 const Banner = styled.div`
   display: flex;
   justify-content: left;
@@ -122,23 +113,27 @@ const Navbar = ({ toggle, handleLogout, currentUserUid }) => {
     <>
       <Nav>
         <Banner>
+          <Link to="/">
           <ImgIcon>
             <img src="../images/Mess3.png" alt="navbar-logo" />
           </ImgIcon>
+          </Link>
+          <Link to="/" style={{ textDecoration: "none"}}>
           <NavLogo>NBRLY</NavLogo>
+          </Link>
         </Banner>
         <MobileIcon onClick={toggle}>
           <FaBars />
         </MobileIcon>
         <NavMenu>
           <NavItem>
-            <NavLinks to="/Home">Home</NavLinks>
+            <NavLinks to="/Home" style={{ textDecoration: "none"}}>Home</NavLinks>
           </NavItem>
           <NavItem>
-            <NavLinks to={`/Profile/${currentUserUid}`}>My Profile</NavLinks>
+            <NavLinks to={`/Profile/${currentUserUid}`} style={{ textDecoration: "none"}}>My Profile</NavLinks>
           </NavItem>
           <NavItem>
-            <LogoutLink onClick={handleLogout}>Logout</LogoutLink>
+            <LogoutLink onClick={handleLogout} style={{ textDecoration: "none"}}>Logout</LogoutLink>
           </NavItem>
         </NavMenu>
       </Nav>

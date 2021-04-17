@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-// import { DropdownButton, Dropdown } from "react-bootstrap";
 import interests from '../lib/interests';
 
 const DropMenuWrap = styled.div`
@@ -11,7 +10,6 @@ display: flex;
 justify-content: center;
 align-items: center;
 font-size: 1rem;
-
 @media screen and (max-width: 960px) {
   transition: 0.8s all ease;
 }

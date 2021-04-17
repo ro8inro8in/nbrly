@@ -27,10 +27,6 @@ import {
   Button,
 } from "../../styles/SignUpStyles.js";
 
-import { createUser } from "../../helpers/createUser.js";
-
-const geofire = require("geofire-common");
-
 const SignUp = ({
   geolocation,
   logIn,
@@ -86,15 +82,6 @@ const SignUp = ({
   useEffect(() => {
     updateLocation();
   }, []);
-
-  // // ? tempporary fix to handle lack of location data
-  // let hash;
-  // if (geolocation) {
-  //   hash = geofire.geohashForLocation([
-  //     geolocation.latitude,
-  //     geolocation.longitude,
-  //   ]);
-  // }
 
   const validateForm = (userInterests) => {
     if (!geolocation) {

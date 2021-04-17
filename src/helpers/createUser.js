@@ -1,5 +1,5 @@
 import { app, storage } from '../configFirebase';
-//const { app, storage } = require("../configFirebase");
+
 
 export const createUser = async (profileData, selectedFile, email, password) => {
   const userCredential = await app

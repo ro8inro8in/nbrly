@@ -10,8 +10,7 @@ import Profile from "./pages/Profile";
 import NavBar from "./NavBar";
 import SideBar from "./SideBar";
 import "firebase/auth";
-// import { LocalConvenienceStoreOutlined } from "@material-ui/icons";
-// import { app, db } from "../configFirebase.js";
+
 import { AuthProvider } from "../contexts/AuthContext";
 import { useAuth } from "../contexts/AuthContext";
 import {
@@ -21,10 +20,10 @@ import {
 } from "../helpers/getSearchResults";
 import useLocalStorage from "../customHooks/useLocalStorage";
 import { getUserById } from "../helpers/getUserById";
-import { successToast, errorToast } from "../util/ErrorNotification";
+import { errorToast } from "../util/ErrorNotification";
 
 const App = () => {
-  // const [isLoggedIn, setIsLoggedIn] = useState();
+
   const [geolocation, setGeolocation] = useState();
   const [isOpen, setIsOpen] = useState(false);
   const [error, setError] = useState();
@@ -83,7 +82,6 @@ const App = () => {
         .query({ name: "geolocation" })
         .then(function (result) {
           if (result.state === "granted") {
-           
             navigator.geolocation.getCurrentPosition((position) => {
               setGeolocation({
                 latitude: position.coords.latitude,
@@ -134,7 +132,6 @@ const App = () => {
         )}
         <Switch>
           <Route exact path="/">
-            {/* <Login /> */}
             {currentUser ? <Redirect to="/Home" /> : <Login />}
           </Route>
           <Route exact path="/Home">
@@ -155,7 +152,6 @@ const App = () => {
           </Route>
           <Route exact path="/Signup">
             <Signup geolocation={geolocation} updateLocation={updateLocation} />
-            {/* logIn={logIn} */}
           </Route>
         </Switch>
 

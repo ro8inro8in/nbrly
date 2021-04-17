@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const FormContainer = styled.div`
   background-color: #ppb800;
+  max-width: 960px;
 `;
 
 export const TopContainer = styled.div`
@@ -15,6 +16,7 @@ export const FormWrapper = styled.div`
   width: 40%;
 
   @media (max-width: 768px) {
+    width: 60%;
     padding-top: 4em;
     padding-bottom: 4em;
   }
@@ -62,7 +64,6 @@ export const Button = styled.button`
   color: white;
   font-size: 1.7rem;
   font-weight: bold;
-
   background: #ffb800;
   border: 0.5px solid #000000;
   border-radius: 5px;
@@ -82,11 +83,12 @@ export const LogInButton = styled.button`
   color: white;
   font-size: 1rem;
   font-weight: bold;
-
+  height: 35px;
   background: #ffb800;
   border: 0.5px solid #000000;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 1.3rem;
   text-align: center;
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
     1px 1px 0 #000;

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FormGroup, Label, Input } from "reactstrap";
-import { Link, withRouter, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import {
   FormContainer,
@@ -14,18 +14,16 @@ import {
   GetStartedDiv,
   LogInButton,
   LoginText,
-  // Label,
 } from "../../styles/LoginStyles.js";
-import { successToast, errorToast } from "../../util/ErrorNotification";
+import { errorToast } from "../../util/ErrorNotification";
 
 const LoginPage = () => {
-  const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
   const [fields, setFields] = useState({
     email: "",
     password: "",
   });
-  let history = useHistory();
+
   const { login } = useAuth();
 
   const handleFieldChange = (event) => {
@@ -34,17 +32,14 @@ const LoginPage = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    // setError("");
-    //setLoading(true);
+    setLoading(true);
     try {
       await login(fields.email, fields.password);
-      //history.push('/Home');
     } catch (err) {
       console.log(err);
       errorToast("Please check email and password are correct.");
     }
-
-    //setLoading(false);
+    setLoading(false);
   };
 
   return (

@@ -21,7 +21,6 @@ align-items: center;
 `;
 
 const Home = ({
-  geolocation,
   updateLocation,
   getSearchResults,
   orderedMatches,

@@ -10,7 +10,6 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
-  //const [loading, setLoading] = useState(true);
 
   function signup(profileData, selectedFile, email, password) {
     return createUser(profileData, selectedFile, email, password);
@@ -24,18 +23,6 @@ export function AuthProvider({ children }) {
     setCurrentUser(null);
     return auth.signOut();
   }
-
-  //   function resetPassword(email) {
-  //     return auth.sendPasswordResetEmail(email)
-  //   }
-
-  //   function updateEmail(email) {
-  //     return currentUser.updateEmail(email)
-  //   }
-
-  //   function updatePassword(password) {
-  //     return currentUser.updatePassword(password)
-  //   }
 
   useEffect(() => {
     const checkAuthState = async () => {
