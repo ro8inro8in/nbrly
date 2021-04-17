@@ -117,7 +117,7 @@ const Profile = ({
      
       </UserCard>
       {!isThisUser && (
-      <a style={{minWidth: "200px"}} ><Button>Contact</Button></a>)}
+      <a style={{width: "200px"}} ><Button style={{width: "200px"}}>Contact</Button></a>)}
 
       <UserBio>
         <SmallHeading>About</SmallHeading>
