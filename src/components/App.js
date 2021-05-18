@@ -26,7 +26,6 @@ const App = () => {
 
   const [geolocation, setGeolocation] = useState();
   const [isOpen, setIsOpen] = useState(false);
-  const [error, setError] = useState();
   const [orderedMatches, setOrderedMatches] = useLocalStorage(
     "orderedMatches",
     []
@@ -65,7 +64,6 @@ const App = () => {
   };
 
   const handleLogout = async () => {
-    setError("");
     window.localStorage.clear();
     setOrderedMatches([]);
     try {

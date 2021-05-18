@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import ActivitySelect from '../ActivitySelect';
 import Results from '../Results';
@@ -32,7 +32,7 @@ const Home = ({
 
   useEffect(() => {
     updateLocation();
-  }, []);
+  }, [updateLocation]);
 
   const handleActivitySelect = (event) => {
     const { value } = event.target;
